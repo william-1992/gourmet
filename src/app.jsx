@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import Index from './pages/index'
+import 'taro-ui/dist/style/index.scss'
 
 import './app.less'
 
@@ -21,8 +22,37 @@ class App extends Component {
 
   config = {
     pages: [
-      'pages/index/index'
+      'pages/index/index',
+      'pages/cart/index',
+      'pages/order/index',
+      'pages/user/index'
     ],
+    tabBar: {
+      color: 'rgba(214, 210, 202, 1)',
+      selectedColor: 'rgba(29, 28, 26, 1)',
+      backgroundColor: 'white',
+      list: [{
+        pagePath: 'pages/index/index',
+        text: '首页',
+        iconPath: './assets/images/home.png',
+        selectedIconPath: './assets/images/homeChecked.png',
+      }, {
+        pagePath: 'pages/cart/index',
+        text: '购物车',
+        iconPath: './assets/images/cart.png',
+        selectedIconPath: './assets/images/cartChecked.png',
+      }, {
+        pagePath: 'pages/order/index',
+        text: '订单',
+        iconPath: './assets/images/order.png',
+        selectedIconPath: './assets/images/orderChecked.png',
+      }, {
+        pagePath: 'pages/user/index',
+        text: '我的',
+        iconPath: './assets/images/user.png',
+        selectedIconPath: './assets/images/userChecked.png',
+      }]
+    },
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
