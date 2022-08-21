@@ -1,3 +1,5 @@
+const path = require("path");
+
 const config = {
   projectName: "gourmet",
   date: "2022-8-15",
@@ -6,6 +8,10 @@ const config = {
     "640": 2.34 / 2,
     "750": 1,
     "828": 1.81 / 2
+  },
+  alias: {
+    "@assets": path.resolve(__dirname, "..", "src/assets"),
+    "@components": path.resolve(__dirname, "..", "src/components")
   },
   sourceRoot: "src",
   outputRoot: "dist",

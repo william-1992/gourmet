@@ -1,7 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import { AtSearchBar } from 'taro-ui'
-import { Swiper, SwiperItem } from '@tarojs/components'
+import { View, Text, Image } from '@tarojs/components'
+import { AtSearchBar, AtTabBar, AtList, AtListItem } from 'taro-ui'
+import bannerImg from '@assets/images/banner.png'
+import IndexSwipper from '@components/swipper'
 import './index.less'
 
 export default class Index extends Component {
@@ -9,7 +10,24 @@ export default class Index extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: ''
+      tabCurrent: 0,
+      value: '',
+      list: [{
+        url: bannerImg,
+        title: '蔬菜小沙拉',
+        price: 20,
+        state: 0
+      }, {
+        url: bannerImg,
+        title: '蔬菜小沙拉',
+        price: 40,
+        state: 1
+      }, {
+        url: bannerImg,
+        title: '蔬菜小沙拉',
+        price: 60,
+        state: 0
+      }]
     }
   }
 
@@ -33,36 +51,66 @@ export default class Index extends Component {
     navigationBarTitleText: '美食家'
   }
   handleClick (value) {
+    console.error('value', value)
     this.setState({
-      current: value
+      tabCurrent: value
     })
   }
 
   render () {
+    const { list, tabCurrent } = this.state
     return (
-      <View className='index'>
+      <View className='index-wrap'>
         <AtSearchBar
           value={this.state.value}
           onChange={this.onChange.bind(this)}
         />
-        <Swiper
-          className='test-h'
-          indicatorColor='#999'
-          indicatorActiveColor='#333'
-          vertical
-          circular
-          indicatorDots
-          autoplay>
-          <SwiperItem>
-            <View className='demo-text-1'>1</View>
-          </SwiperItem>
-          <SwiperItem>
-            <View className='demo-text-2'>2</View>
-          </SwiperItem>
-          <SwiperItem>
-            <View className='demo-text-3'>3</View>
-          </SwiperItem>
-        </Swiper>
+        <IndexSwipper list={list} />
+        <AtTabBar
+          tabList={[
+            { title: '全部' },
+            { title: '早餐' },
+            { title: '午餐' },
+            { title: '下午茶' },
+            { title: '晚餐' },
+            { title: '夜宵' },
+          ]}
+          color='#D6D2CA'
+          selectedColor='#FEC748'
+          backgroundColor='#F5F5F5'
+          onClick={this.handleClick.bind(this)}
+          current={tabCurrent}
+        />
+        <AtList>
+          <AtListItem
+            title='标题文字'
+            note='描述信息'
+            extraText={<Text>详细信息11</Text>}
+            arrow='right'
+            thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
+          />
+          <AtListItem
+            title='标题文字'
+            note='描述信息'
+            extraText='详细信息'
+            arrow='right'
+            thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
+          />
+          <AtListItem
+            title='标题文字'
+            note='描述信息'
+            extraText='详细信息'
+            arrow='right'
+            thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
+          />
+          <AtListItem
+            title='标题文字'
+            note='描述信息'
+            extraText='详细信息'
+            arrow='right'
+            thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
+          />
+        </AtList>
       </View>
     )
   }
