@@ -23,7 +23,8 @@ class App extends Component {
       'pages/index/index',
       'pages/cart/index',
       'pages/order/index',
-      'pages/user/index'
+      'pages/user/index',
+      
     ],
     tabBar: {
       color: 'rgba(214, 210, 202, 1)',

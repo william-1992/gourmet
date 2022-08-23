@@ -3,6 +3,7 @@ import { View, Text, Image } from '@tarojs/components'
 import { AtSearchBar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import bannerImg from '@assets/images/banner.png'
 import IndexSwipper from '@components/swipper'
+import CartList from '@components/cartList'
 import './index.less'
 
 export default class Index extends Component {
@@ -81,36 +82,7 @@ export default class Index extends Component {
           onClick={this.handleClick.bind(this)}
           current={tabCurrent}
         />
-        <AtList>
-          <AtListItem
-            title='标题文字'
-            note='描述信息'
-            extraText={<Text>详细信息11</Text>}
-            arrow='right'
-            thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
-          />
-          <AtListItem
-            title='标题文字'
-            note='描述信息'
-            extraText='详细信息'
-            arrow='right'
-            thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
-          />
-          <AtListItem
-            title='标题文字'
-            note='描述信息'
-            extraText='详细信息'
-            arrow='right'
-            thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
-          />
-          <AtListItem
-            title='标题文字'
-            note='描述信息'
-            extraText='详细信息'
-            arrow='right'
-            thumb='http://img12.360buyimg.com/jdphoto/s72x72_jfs/t10660/330/203667368/1672/801735d7/59c85643N31e68303.png'
-          />
-        </AtList>
+        <CartList />
       </View>
     )
   }
