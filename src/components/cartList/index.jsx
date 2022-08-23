@@ -9,9 +9,7 @@ export default class CartList extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {
-      current: 0
-    }
+    this.state = {}
   }
   render() {
     return (    
