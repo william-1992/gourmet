@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Radio, Image } from '@tarojs/components'
 import { AtIcon, AtTag, AtButton } from 'taro-ui'
-import OrderList from '@components/orderList'
+import CartList from '@components/cartList'
 import './index.less'
 
 export default class Cart extends Component {
@@ -29,7 +29,7 @@ export default class Cart extends Component {
   render () {
     return (
       <View className='cart-wrap'>
-        <OrderList />
+        <CartList />
         <View className='cart-footer'>
           <Radio color='#FEC748' value='选中' checked>全选</Radio>
           <AtButton size='small' type='primary' circle>下单</AtButton>

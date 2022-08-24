@@ -3,7 +3,7 @@ import { View, Text, Image } from '@tarojs/components'
 import { AtSearchBar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import bannerImg from '@assets/images/banner.png'
 import IndexSwipper from '@components/swipper'
-import CartList from '@components/cartList'
+import GoodsList from '@components/goodsList'
 import './index.less'
 
 export default class Index extends Component {
@@ -82,7 +82,7 @@ export default class Index extends Component {
           onClick={this.handleClick.bind(this)}
           current={tabCurrent}
         />
-        <CartList />
+        <GoodsList />
       </View>
     )
   }

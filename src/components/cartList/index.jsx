@@ -1,8 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
-import { AtTabBar } from 'taro-ui'
+import { View, Text, Image, Radio } from '@tarojs/components'
+import { AtIcon, AtTag } from 'taro-ui'
 import cartlist from '@assets/images/cartlist.png'
-import cartChecked from '@assets/images/banner-cart-checked.png'
 import './index.less'
 
 export default class CartList extends Component {
@@ -12,24 +11,24 @@ export default class CartList extends Component {
     this.state = {}
   }
   render() {
+    const { type } = this.props
     return (    
-      <View className='cart-list'>
-        <View className='cart-list-item'>
-          <View className='cart-list-item-left'>
-            <Image
-              className='item-img'
-              src={cartlist}
-            />
-            <View className='cart-list-item-title'>
-              <View className='cart-list-item-title-h'>重庆麻辣鸳鸯火锅</View>
-              <View className='cart-list-item-title-price'><Text className='unit'>¥</Text>256</View>
-            </View>
+      <View className='order-list'>
+        <View className='list-item'>
+          <View className='list-item-top'>
+            <Text className='list-item-top-data'>添加日期：<Text>2022/08/04</Text></Text>
+            {type!=='detailed' && <AtIcon value='trash' size='18' color='rgba(112, 112, 112, 1)'></AtIcon>}
           </View>
-          <View className='cart-list-item-right'>
-            <Image
-              className='item-cart'
-              src={cartChecked}
-            />
+          <View className='list-item-content'>
+            {type!=='detailed' && <Radio value='选中' checked></Radio> } 
+            <Image className='item-img' src={cartlist} />
+            <View className='list-item-content-text'>
+              <View className='list-item-content-text-title'>
+                <View className='title-h'>西红柿炖牛腩</View>
+                <AtTag size='small'>晚餐</AtTag>
+              </View>
+              <Text className='price'><Text className='unit'>¥</Text>66</Text>
+            </View>
           </View>
         </View>
       </View>

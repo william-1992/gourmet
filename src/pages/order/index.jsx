@@ -29,6 +29,12 @@ export default class Order extends Component {
     navigationBarTitleText: '订单'
   }
 
+  toRouter = () => {
+    Taro.navigateTo({
+      url: '/pages/order/detailed'
+    })
+  }
+
   render () {
     return (
       <View className='order-wrap'>
@@ -44,7 +50,7 @@ export default class Order extends Component {
           <AtDivider className='foot-divider' />
           <View className='item-foot'>
             <AtButton><Image className='item-img' src={cancel} />取消</AtButton>
-            <AtButton className='yellow'><Image className='item-img' src={pricel} />明细</AtButton>
+            <AtButton onClick={this.toRouter} className='yellow'><Image className='item-img' src={pricel} />明细</AtButton>
           </View>
         </AtList>
         <AtList className='cancel-item'>
@@ -57,7 +63,7 @@ export default class Order extends Component {
           <AtListItem title='订单编号' extraText='34528907520' />
           <AtDivider className='foot-divider' />
           <View className='item-foot'>
-            <AtButton><Image className='item-img' src={cancel2} />取消</AtButton>
+            <AtButton><Image className='item-img' src={cancel2} />已取消</AtButton>
             <AtButton className='yellow'><Image className='item-img' src={pricel} />明细</AtButton>
           </View>
         </AtList>

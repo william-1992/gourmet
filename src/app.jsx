@@ -24,6 +24,7 @@ class App extends Component {
       'pages/cart/index',
       'pages/order/index',
       'pages/user/index',
+      'pages/order/detailed'
       
     ],
     tabBar: {
