@@ -1,0 +1,81 @@
+.user-wrap {
+  padding: 0 31px;
+  .user-top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 49px;
+    .taro-img {
+      width: 131px;
+      height: 131px;
+    }
+    .taro-text {
+      display: flex;
+      align-items: center;
+      font-size: 38px;
+      color: #1D1C1A;
+      margin-top: 17px;
+      margin-right: -46px;
+      .taro-img {
+        width: 46px;
+        height: 46px;
+        margin: 0 10px;
+      }
+    }
+  }
+  .at-list {
+    margin-top: 30px;
+    border-radius: 35px;
+    padding: 16px 30px;
+    .at-list__item {
+      padding: 12px 0;
+      &::after {
+        display: none;
+      }
+      .item-content__info-title {
+        font-size: 29px;
+        color: #D6D2CA;
+      }
+      .item-extra__info {
+        padding-right: 0;
+        font-size: 29px;
+        color: #1D1C1A;
+      }
+    }
+  }
+  .user-help {
+    margin-top: 20px;
+    .at-list__item {
+      .item-content__info-title {
+        color: #1D1C1A;
+      }
+    }
+  }
+}
+.user-edit-wrap {
+  .at-form {
+    margin-top: 30px;
+    background: none;
+    .user-form {
+      border-radius: 35px;
+      overflow: hidden;
+      background-color: #fff;
+      padding: 22px 0;
+      margin-bottom: 50px;
+      .at-input {
+        // padding: 10px 0;
+      }
+      .input-last {
+        &::after {
+          display: none;
+        }
+      }
+    }
+    .at-button {
+      background-color: #FFAC27;
+      border-color: #FFAC27;
+      border-radius: 28px;
+    }
+  }
+}

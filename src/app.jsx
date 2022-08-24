@@ -24,8 +24,8 @@ class App extends Component {
       'pages/cart/index',
       'pages/order/index',
       'pages/user/index',
-      'pages/order/detailed'
-      
+      'pages/order/detailed',
+      'pages/user/edit'
     ],
     tabBar: {
       color: 'rgba(214, 210, 202, 1)',
