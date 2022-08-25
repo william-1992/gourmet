@@ -49,16 +49,12 @@ export default class Index extends Component {
   }
 
   config = {
-    navigationBarTitleText: '美食家'
+    navigationBarTitleText: '搜索'
   }
   handleClick (value) {
+    console.error('value', value)
     this.setState({
       tabCurrent: value
-    })
-  }
-  toSearch = () => {
-    Taro.navigateTo({
-      url: '/pages/index/search'
     })
   }
 
@@ -67,10 +63,10 @@ export default class Index extends Component {
     return (
       <View className='index-wrap'>
         <AtSearchBar
+          focus
           value={this.state.value}
-          onFocus={this.toSearch}
+          onChange={this.onChange.bind(this)}
         />
-        <IndexSwipper list={list} />
         <AtTabBar
           tabList={[
             { title: '全部' },
