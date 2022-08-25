@@ -1,7 +1,8 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Image } from '@tarojs/components'
+import { View, Text, Image, Button, Picker } from '@tarojs/components'
 import avatar from '@assets/images/avatar.png'
-import { AtList, AtListItem, AtForm, AtInput, AtButton, AtIcon } from 'taro-ui'
+import { AtForm, AtInput, AtButton, AtIcon } from 'taro-ui'
+import { areas } from './area';
 import './index.less'
 
 export default class User extends Component {
@@ -9,26 +10,28 @@ export default class User extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      provinces: [], 
+      citys: [],
+      counts: [],
       label: '',
       name: '',
       phone: '',
       region: '',
+      regionName: '',
+      regionCode: [],
       address: ''
     }
   }
 
-  componentWillMount () { }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
   config = {
     navigationBarTitleText: '编辑'
+  }
+
+  componentDidMount () {
+    const provinces = areas[0] && areas.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
+    const citys = areas[0].children[0] && areas[0].children.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
+    const counts = areas[0].children[0].children[0] && areas[0].children[0].children.map(({ areaLvl, label, parentId, value }) => ({ areaLvl, label, parentId, value }))
+    this.setState({ provinces, citys, counts })
   }
 
   handleChange (value) {
@@ -40,7 +43,36 @@ export default class User extends Component {
     console.log(this.state.value, event)
   }
 
+  getRegion = () => {
+    this.setState({ modalVisible: true })
+  }
+
+  onChange = e => {
+    const { provinces, citys, counts } = this.state;
+    const {value = [0,0,0]} = e.detail 
+    this.setState({
+      region: value,
+      regionName: `${provinces[value[0]].label} ${citys[value[1]]?citys[value[1]].label:''} ${counts[value[2]]?counts[value[2]].label:''}`,
+      regionCode: [provinces[value[0]].value, citys[value[1]]?citys[value[1]].value:'', counts[value[2]]?counts[value[2]].value:'']
+    })
+  }
+
+  onColumnChange = (e) => {
+    const { provinces, citys } = this.state
+    const { column, value } = e.detail
+    if(column === 0) {
+      const cityArr = provinces[value].children ? provinces[value].children : []
+      const countArr = (cityArr[0] && cityArr[0].children) ? cityArr[0].children : []
+      this.setState({ citys: cityArr, counts: countArr })
+    }else if(column === 1) {
+      const countArr = citys[value].children ? citys[value].children : []
+      this.setState({ counts: countArr })
+    }
+  }
+
   render () {
+    const { provinces, citys, counts, region, regionName } = this.state;
+    const addresArr = [provinces, citys, counts]
     return (
       <View className='user-wrap user-edit-wrap'>
         <View className='user-top'>
@@ -72,13 +104,22 @@ export default class User extends Component {
               placeholder='请填写' 
               value={this.state.phone} 
             />
-            <AtInput 
-              name='region' 
-              title='所在地区' 
-              type='text' 
-              placeholder='省、市、区' 
-              value={this.state.region} 
-            ><AtIcon value='map-pin' size='20' color='#FFAC27'></AtIcon></AtInput>
+            <Picker 
+              mode='multiSelector' 
+              range={addresArr} 
+              rangeKey='label' 
+              value={region} 
+              onChange={this.onChange}
+              onColumnChange={this.onColumnChange}
+            >
+              <AtInput 
+                name='region' 
+                title='所在地区' 
+                type='text' 
+                placeholder='省、市、区' 
+                value={regionName} 
+              ><AtIcon onClick={this.getRegion} value='map-pin' size='20' color='#FFAC27'></AtIcon></AtInput>
+            </Picker>
             <AtInput 
               className='input-last'
               name='address' 
