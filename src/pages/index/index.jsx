@@ -4,6 +4,7 @@ import { AtSearchBar, AtTabBar, AtList, AtListItem } from 'taro-ui'
 import bannerImg from '@assets/images/banner.png'
 import IndexSwipper from '@components/swipper'
 import GoodsList from '@components/goodsList'
+import API from '@api/api'
 import './index.less'
 
 export default class Index extends Component {
@@ -34,7 +35,9 @@ export default class Index extends Component {
 
   componentWillMount () { }
 
-  componentDidMount () { }
+  componentDidMount () {
+    this.getBanner()
+  }
 
   componentWillUnmount () { }
 
@@ -46,6 +49,11 @@ export default class Index extends Component {
     this.setState({
       value
     })
+  }
+
+  async getBanner() {
+    let result = await API.getAdvanceList('/api/list')
+    console.error('result', result)
   }
 
   config = {
