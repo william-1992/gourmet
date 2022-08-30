@@ -53,6 +53,37 @@ class API extends Server {
       throw err;
     }
   }
+
+  // 获取订单列表 - 订单
+  // /weixin/order/orderGoodsInfo
+  async getOrderList(url, params = {}) {
+    try {
+      let result = await this.axios("get", `${API_HOSTNAME}${url}`, params);
+      if (result) return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+  // 获取订单详情
+  async getOrderDetail(url, params = {}) {
+    try {
+      let result = await this.axios("get", `${API_HOSTNAME}${url}`, params);
+      if (result) return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  // /weixin/cart/add      加入购物车接口  参数：openid  goodsId
+  // 加入购物车
+  async getAddCartl(url, params = {}) {
+    try {
+      let result = await this.axios("get", `${API_HOSTNAME}${url}`, params);
+      if (result) return result;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 export default new API();
