@@ -76,6 +76,20 @@ export default class Index extends Component {
       url: '/pages/index/search'
     })
   }
+  async swiperCallBack (item) {
+    if(item.status === '1') {
+      const result = await API.getCartList(`/weixin/cart/deleteGoods/${item.id}?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
+      if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+      this.getRotation()
+      return <AtToast isOpened text='删除成功'></AtToast>
+      
+    }else {
+      const result = await API.getAddCartl(`/weixin/cart/add?goodsId=${item.id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
+      if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+      this.getRotation()
+      return <AtToast isOpened text='成功加入购物车'></AtToast>
+    }
+  }
 
   render () {
     const { list, tabCurrent, menuList, goodsList } = this.state
@@ -85,7 +99,7 @@ export default class Index extends Component {
           value={this.state.value}
           onFocus={this.toSearch}
         />
-        { list.length>0 && <IndexSwipper list={list} /> }
+        { list.length>0 && <IndexSwipper onChange={this.swiperCallBack} list={list} /> }
         <AtTabBar
           tabList={menuList}
           color='#D6D2CA'
@@ -94,7 +108,7 @@ export default class Index extends Component {
           onClick={this.handleClick.bind(this)}
           current={tabCurrent}
         />
-        <GoodsList data={goodsList} />
+        <GoodsList onChange={this.swiperCallBack}  data={goodsList} />
       </View>
     )
   }

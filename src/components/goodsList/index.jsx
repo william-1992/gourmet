@@ -12,7 +12,7 @@ export default class GoodsList extends Component {
     this.state = {}
   }
   render() {
-    const { data } = this.props
+    const { data, onChange } = this.props
     const API_HOSTNAME = process.env.API_HOSTNAME;
     return (    
       <View className='cart-list'>
@@ -30,9 +30,9 @@ export default class GoodsList extends Component {
             </View>
             <View className='cart-list-item-right'>
               {item.status === '0' ? (
-                <Image className='item-cart' src={cartDefault}/>
+                <Image onClick={() => onChange(item)} className='item-cart' src={cartDefault}/>
               ) : (
-                <Image className='item-cart' src={cartChecked}/>
+                <Image onClick={() => onChange(item)} className='item-cart' src={cartChecked}/>
               )}
             </View>
           </View>

@@ -8,7 +8,7 @@ import cartChecked from '@assets/images/shopcart_ligh.png'
 export default  class IndexSwipper extends PureComponent {
 
   render () {
-    const { list } = this.props
+    const { list, onChange } = this.props
     const API_HOSTNAME = process.env.API_HOSTNAME;
     return (
       <Swiper
@@ -25,9 +25,9 @@ export default  class IndexSwipper extends PureComponent {
                   src={`${API_HOSTNAME}${item.goodsImg}`}
                 />
                 { item.status === '0' ? (
-                  <Image className='item-img-cart' src={cartDefault} />
+                  <Image onClick={() => onChange(item)} className='item-img-cart' src={cartDefault} />
                 ) : (
-                  <Image className='item-img-cart' src={cartChecked} />
+                  <Image onClick={() => onChange(item)} className='item-img-cart item-img-cart-ligh' src={cartChecked} />
                 )}
               </View>
               <View className='item-text'>
