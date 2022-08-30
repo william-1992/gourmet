@@ -1,6 +1,7 @@
 import axios from "axios";
-import { debounce, isNil } from "lodash";
+import { debounce, isNil, includes } from "lodash";
 import qs from "qs";
+import header from "./header";
 import { AtMessage } from "taro-ui";
 
 const { REACT_APP_LOCAL, REACT_APP_API_HOSTNAME } = process.env;
@@ -38,7 +39,48 @@ if (REACT_APP_LOCAL) {
   );
 }
 
+const HTTP_STATUS = {
+  SUCCESS: 200,
+  CREATED: 201,
+  ACCEPTED: 202,
+  CLIENT_ERROR: 400,
+  AUTHENTICATE: 401,
+  FORBIDDEN: 403,
+  NOT_FOUND: 404,
+  SERVER_ERROR: 500,
+  BAD_GATEWAY: 502,
+  SERVICE_UNAVAILABLE: 503,
+  GATEWAY_TIMEOUT: 504
+};
+
+const customInterceptor = async chain => {
+  const requestParams = chain.requestParams;
+  if (!includes(oAuth.blackUrlList, requestParams.url)) {
+    await oAuth.init();
+  }
+  requestParams.header = header.get();
+  Object.assign(requestParams.data, defaultParams.get());
+
+  return chain.proceed(requestParams).then(async res => {
+    // 只要请求成功，不管返回什么状态码，都走这个回调
+    if (res.statusCode === HTTP_STATUS.NOT_FOUND) {
+      return Promise.reject("请求资源不存在");
+    } else if (res.statusCode === HTTP_STATUS.BAD_GATEWAY) {
+      return Promise.reject("服务端出现了问题");
+    } else if (res.statusCode === HTTP_STATUS.FORBIDDEN) {
+      return Promise.reject("没有权限访问");
+    } else if (res.statusCode === HTTP_STATUS.AUTHENTICATE) {
+      return Promise.reject("需要鉴权");
+    } else if (res.statusCode === HTTP_STATUS.SUCCESS) {
+      return res.data;
+    }
+  });
+};
+
 axios.defaults.withCredentials = true;
+
+// Taro.addInterceptor(customInterceptor);
+// Taro.addInterceptor(Taro.interceptors.timeoutInterceptor);
 
 /**
  * 主要params参数

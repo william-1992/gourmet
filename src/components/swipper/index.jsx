@@ -2,31 +2,37 @@ import Taro, { PureComponent } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 // 引入 Swiper, SwiperItem 组件
 import { Swiper, SwiperItem } from '@tarojs/components'
-import cartDefault from '@assets/images/banner-cart.png'
-import cartChecked from '@assets/images/banner-cart-checked.png'
+import cartDefault from '@assets/images/shopcart.png'
+import cartChecked from '@assets/images/shopcart_ligh.png'
 
 export default  class IndexSwipper extends PureComponent {
 
   render () {
     const { list } = this.props
+    const API_HOSTNAME = process.env.API_HOSTNAME;
     return (
       <Swiper
+        current={0}
         className='test-h'
         displayMultipleItems={1.3}
       >
         {list.length>0 && list.map(item => (
-          <SwiperItem>
+          <SwiperItem key={item.id}>
             <View className='item'>
               <View className='item-img'>
                 <Image
                   className='item-img-banner'
-                  src={item.url}
+                  src={`${API_HOSTNAME}${item.goodsImg}`}
                 />
-                <Image className='item-img-cart' src={cartDefault} />
+                { item.status === '0' ? (
+                  <Image className='item-img-cart' src={cartDefault} />
+                ) : (
+                  <Image className='item-img-cart' src={cartChecked} />
+                )}
               </View>
               <View className='item-text'>
-                <Text className='item-text-title'>{ item.title }</Text>
-                <Text className='item-text-price'><Text className='unit'>¥</Text>{ item.price }</Text>
+                <Text className='item-text-title'>{ item.goodsName }</Text>
+                <Text className='item-text-price'><Text className='unit'>¥</Text>{ item.goodsPrice }</Text>
               </View>
             </View>
           </SwiperItem>

@@ -8,6 +8,9 @@
     .at-search-bar__input-cnt {
       background-color: #fff;
     }
+    &::after {
+      display: none;
+    }
   }
   .swiper-container {
     height: inherit;
@@ -15,6 +18,8 @@
       border-radius: 42px;
       background-color: #fff;
       margin-left: 31px;
+      padding-bottom: 20px;
+      overflow: hidden;
       .item-img {
         position: relative;
         height: 480px;
@@ -59,6 +64,9 @@
   }
   .at-tab-bar {
     align-items: center;
+    &::after {
+      display: none;
+    }
     .at-tab-bar__item--active {
       .at-tab-bar__title {
         display: flex;

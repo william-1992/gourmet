@@ -1,20 +1,30 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Radio, Image } from '@tarojs/components'
-import { AtIcon, AtTag, AtButton } from 'taro-ui'
+import { AtIcon, AtTag, AtButton, AtToast } from 'taro-ui'
+import API from '@api/api'
+import qs from "qs";
 import CartList from '@components/cartList'
 import './index.less'
+import { async } from 'regenerator-runtime'
 
 export default class Cart extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
+      menuList: [],
+      list: [],
+      allChecked: false,
+      isPlace: false
     }
   }
 
   componentWillMount () { }
 
-  componentDidMount () { }
+  componentDidMount () {
+    this.getMenuList()
+    this.getCartList()
+  }
 
   componentWillUnmount () { }
 
@@ -26,13 +36,80 @@ export default class Cart extends Component {
     navigationBarTitleText: '购物车'
   }
 
+  async getMenuList() {
+    let result = await API.getMenuList('/weixin/menu/menuList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
+    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    this.setState({ menuList: result.data })
+  }
+
+  async getCartList() {
+    let result = await API.getCartList('/weixin/goods/queryCartGoodsInfo?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
+    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    const new_list = result.data.map(item => ({ ...item, checked: false }))
+    this.setState({ list: new_list })
+  }
+  // callback
+  radioHandle = (type, row) => {
+    const { list } = this.state;
+    if(type === 'checked') {
+      const new_data = list.map(item => {
+        if(item.id === row.id) {
+          return { ...item, checked: !item.checked }
+        }else {
+          return item
+        }
+      })
+      this.setState({ list: new_data }, () => {
+        this.filterListChecked()
+      })
+    }else {
+      this.getCartList()
+    }
+  }
+
+  filterListChecked() {
+    const {list} = this.state
+    const allChecked = list.some(item => item.checked === true)
+    this.setState({ allChecked })
+  }
+
+  radioChange = (e) => {
+    const { allChecked, list } = this.state;
+    const new_data = list.map(item => ({ ...item, checked: !allChecked }))
+    this.setState({ allChecked: !allChecked, list: new_data })
+  }
+
+  placeOrder = async () => {
+    const { list } = this.state
+    const ids = list.map(item => item.checked && item.id)
+    const result = await API.getCartList(`/weixin/order/creatOrder?${qs.stringify({
+      ids,
+      openid: 'o6_bmjrPTIm6_2sgVt7hMZOPfL2M'
+    })}`)
+    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    this.getCartList()
+    return <AtToast isOpened text='下单成功'></AtToast>
+  }
+
   render () {
+    const { allChecked, isPlace, list, menuList } = this.state;
     return (
       <View className='cart-wrap'>
-        <CartList />
+        <CartList list={list} menuList={menuList} isAll={allChecked} callBack={this.radioHandle} />
         <View className='cart-footer'>
-          <Radio color='#FEC748' value='选中' checked>全选</Radio>
-          <AtButton size='small' type='primary' circle>下单</AtButton>
+          <Radio 
+            color='#FEC748' 
+            value='选中' 
+            checked={allChecked} 
+            onChange={this.radioChange}
+          >全选</Radio>
+          <AtButton 
+            disabled={ (isPlace || allChecked) ? false : true } 
+            size='small' 
+            type='primary' 
+            circle
+            onClick={this.placeOrder.bind(this)}
+          >下单</AtButton>
         </View>
       </View>
     )

@@ -13,30 +13,19 @@ export default class Index extends Component {
     super(props)
     this.state = {
       tabCurrent: 0,
+      tabId: null,
       value: '',
-      list: [{
-        url: bannerImg,
-        title: '蔬菜小沙拉',
-        price: 20,
-        state: 0
-      }, {
-        url: bannerImg,
-        title: '蔬菜小沙拉',
-        price: 40,
-        state: 1
-      }, {
-        url: bannerImg,
-        title: '蔬菜小沙拉',
-        price: 60,
-        state: 0
-      }]
+      list: [],
+      menuList: [],
+      goodsList: []
     }
   }
 
   componentWillMount () { }
 
   componentDidMount () {
-    this.getBanner()
+    this.getRotation()
+    this.getMenuList()
   }
 
   componentWillUnmount () { }
@@ -51,9 +40,26 @@ export default class Index extends Component {
     })
   }
 
-  async getBanner() {
-    let result = await API.getAdvanceList('/api/list')
-    console.error('result', result)
+  async getRotation() {
+    let result = await API.getRotationList('/weixin/goods/rotationList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
+    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    this.setState({ list: result.data })
+  }
+
+  async getMenuList() {
+    let result = await API.getMenuList('/weixin/menu/menuList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
+    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    const new_List = result.data.map(item => ({ title: item.menuName, id: item.id }))
+    this.setState({ menuList: new_List, tabId: new_List[0].id }, () => {
+      this.getGoodsList(this.state.tabId)
+    })
+  }
+
+  async getGoodsList(id) {
+    if(!id) return
+    let result = await API.getGoodsList(`/weixin/goods/goodslist?menu_id=${id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
+    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    this.setState({ goodsList: result.data })
   }
 
   config = {
@@ -63,6 +69,7 @@ export default class Index extends Component {
     this.setState({
       tabCurrent: value
     })
+    this.getGoodsList(this.state.menuList[value].id)
   }
   toSearch = () => {
     Taro.navigateTo({
@@ -71,30 +78,23 @@ export default class Index extends Component {
   }
 
   render () {
-    const { list, tabCurrent } = this.state
+    const { list, tabCurrent, menuList, goodsList } = this.state
     return (
       <View className='index-wrap'>
         <AtSearchBar
           value={this.state.value}
           onFocus={this.toSearch}
         />
-        <IndexSwipper list={list} />
+        { list.length>0 && <IndexSwipper list={list} /> }
         <AtTabBar
-          tabList={[
-            { title: '全部' },
-            { title: '早餐' },
-            { title: '午餐' },
-            { title: '下午茶' },
-            { title: '晚餐' },
-            { title: '夜宵' },
-          ]}
+          tabList={menuList}
           color='#D6D2CA'
           selectedColor='#FEC748'
           backgroundColor='#F5F5F5'
           onClick={this.handleClick.bind(this)}
           current={tabCurrent}
         />
-        <GoodsList />
+        <GoodsList data={goodsList} />
       </View>
     )
   }

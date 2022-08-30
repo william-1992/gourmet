@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import Index from './pages/index'
 import 'taro-ui/dist/style/index.scss'
+import header from '@api/header';
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -8,15 +9,70 @@ import 'taro-ui/dist/style/index.scss'
 //   require('nerv-devtools')
 // }
 
+// history 路由强制到 hash
+if (window &&window.location.pathname && window.location.pathname !== '/') {
+  const redirectPathhref = window.location.href
+    .replace(window.location.origin, '')
+    .replace(/#.*$/, '')
+  window.IN_HIS_ROUTER_JUMPING = true
+  window.location.replace('/#'+redirectPathhref)
+}
+
 class App extends Component {
 
-  componentDidMount () {}
+  componentDidMount () {
+    this.init()
+  }
 
   componentDidShow () {}
 
   componentDidHide () {}
 
   componentDidCatchError () {}
+
+  init() {
+    // 利用正则表达式
+
+    let url =  window.location.search
+
+
+    var params = this.queryURLParams(url)
+    // openid: "121548a8a8a8a8"
+
+    //如果为空则需要web认证
+    if(!params){
+        axios({
+            method: 'get',//提交方法
+            url: '/weixin/oauth/config',//提交地址
+            params: {}
+        }).then((res) => {
+            document.location.href = res.data.data
+        })
+    }
+    //以下为伪代码：
+    var openid = params.openid;
+    header.set({
+      'openid': openid,
+    });
+    //所有ajxa请求都要有 加上参数 openid;  无论是新增  删除  更新 get post
+  }
+
+  // // 返回参数对象
+  queryURLParams(url) {
+
+    let pattern = /(\w+)=(\w+)/ig; //定义正则表达式
+
+    let parames = {}; // 定义参数对象
+
+    url.replace(pattern, ($, $1, $2) => {
+
+        parames[$1] = $2;
+
+    });
+
+    return parames;
+
+}
 
   config = {
     pages: [
