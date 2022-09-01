@@ -44,6 +44,15 @@ class API extends Server {
       throw err;
     }
   }
+  // 下单 - 购物车
+  async createCart(url, params = {}) {
+    try {
+      let result = await this.axios("post", `${API_HOSTNAME}${url}`, params);
+      if (result) return result;
+    } catch (err) {
+      throw err;
+    }
+  }
   // /weixin/cart/deleteGoods/{ids}
   async delCart(url, params = {}) {
     try {
@@ -73,10 +82,28 @@ class API extends Server {
       throw err;
     }
   }
-
+  // 取消订单
+  async getOrderCancel(url, params = {}) {
+    try {
+      let result = await this.axios("get", `${API_HOSTNAME}${url}`, params);
+      if (result) return result;
+    } catch (err) {
+      throw err;
+    }
+  }
   // /weixin/cart/add      加入购物车接口  参数：openid  goodsId
   // 加入购物车
   async getAddCartl(url, params = {}) {
+    try {
+      let result = await this.axios("post", `${API_HOSTNAME}${url}`, params);
+      if (result) return result;
+    } catch (err) {
+      throw err;
+    }
+  }
+  // weixin/cart/deleteGoods  get方法  openid goodsId
+  // 购物车中删除该订单
+  async getDelCartl(url, params = {}) {
     try {
       let result = await this.axios("get", `${API_HOSTNAME}${url}`, params);
       if (result) return result;

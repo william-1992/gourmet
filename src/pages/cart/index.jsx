@@ -38,13 +38,13 @@ export default class Cart extends Component {
 
   async getMenuList() {
     let result = await API.getMenuList('/weixin/menu/menuList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
-    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ menuList: result.data })
   }
 
   async getCartList() {
     let result = await API.getCartList('/weixin/goods/queryCartGoodsInfo?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
-    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     const new_list = result.data.map(item => ({ ...item, checked: false }))
     this.setState({ list: new_list })
   }
@@ -82,19 +82,24 @@ export default class Cart extends Component {
   placeOrder = async () => {
     const { list } = this.state
     const ids = list.map(item => item.checked && item.id)
-    const result = await API.getCartList(`/weixin/order/creatOrder?${qs.stringify({
-      ids,
+    const result = await API.createCart(`/weixin/order/creatOrder`, {
+      goodsIds: ids,
       openid: 'o6_bmjrPTIm6_2sgVt7hMZOPfL2M'
-    })}`)
+    })
+    // const result = await API.createCart(`/weixin/order/creatOrder?${qs.stringify({
+    //   ids,
+    //   openid: 'o6_bmjrPTIm6_2sgVt7hMZOPfL2M'
+    // })}`)
     if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
     this.getCartList()
-    return <AtToast isOpened text='下单成功'></AtToast>
+    return Taro.atMessage({ 'message': '下单成功', 'type': 'success' })
   }
 
   render () {
     const { allChecked, isPlace, list, menuList } = this.state;
     return (
       <View className='cart-wrap'>
+        <AtMessage />
         <CartList list={list} menuList={menuList} isAll={allChecked} callBack={this.radioHandle} />
         <View className='cart-footer'>
           <Radio 

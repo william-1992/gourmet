@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
-import { AtList, AtListItem, AtButton, AtDivider } from 'taro-ui'
+import { AtList, AtListItem, AtButton, AtDivider, AtMessage } from 'taro-ui'
 import API from '@api/api'
 import cancel from '@assets/images/cancel.png'
 import cancel2 from '@assets/images/cancel2.png'
@@ -37,7 +37,7 @@ export default class Order extends Component {
 
   getOrderList = async () => {
     const result = await API.getOrderList('/weixin/order/orderList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M')
-    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ orderList: result.data })
   }
 
@@ -49,9 +49,9 @@ export default class Order extends Component {
 
   orderCancel = async (item) => {
     const result = await API.getOrderCancel(`weixin/order/cancelOrders/${item.id}?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M `)
-    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.getOrderList()
-    return <AtToast isOpened text='已取消该订单'></AtToast>
+    return Taro.atMessage({ 'message': '已取消该订单', 'type': 'success' })
   }
 
   render () {
@@ -59,6 +59,7 @@ export default class Order extends Component {
     const { orderList } = this.state
     return (
       <View className='order-wrap'>
+        <AtMessage />
         <View className='order-wrap-header'>共计<Text>{orderList.length || 0}</Text>订单</View>
         { orderList.length>0 && orderList.map(item => (
           <AtList className={`${ item.orderStatus === 2 ? 'cancel-item' : item.orderStatus === 1 ? 'down-item' : '' }`}>

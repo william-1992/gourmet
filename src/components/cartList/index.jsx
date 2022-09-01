@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Image, Radio } from '@tarojs/components'
-import { AtIcon, AtTag, AtToast } from 'taro-ui'
+import { AtIcon, AtTag, AtToast, AtMessage } from 'taro-ui'
 import cartlist from '@assets/images/cartlist.png'
 import API from '@api/api'
 import './index.less'
@@ -34,9 +34,9 @@ export default class CartList extends Component {
 
   delCart = async (item) => {
     let result = await API.getCartList(`/weixin/cart/deleteGoods/${item.id}?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
-    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.props.callBack('del')
-    return <AtToast isOpened text='删除成功'></AtToast>
+    return Taro.atMessage({ 'message': '删除成功', 'type': 'success' })
   }
 
   render() {
@@ -44,6 +44,7 @@ export default class CartList extends Component {
     const API_HOSTNAME = process.env.API_HOSTNAME;
     return (    
       <View className='order-list'>
+        <AtMessage />
         {list.length>0 && list.map(item => (
           <View className='list-item'>
             <View className='list-item-top'>

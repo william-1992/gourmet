@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
-import { AtSearchBar, AtTabBar, AtList, AtListItem } from 'taro-ui'
+import { AtSearchBar, AtTabBar, AtList, AtListItem, AtMessage, AtToast } from 'taro-ui'
 import bannerImg from '@assets/images/banner.png'
 import IndexSwipper from '@components/swipper'
 import GoodsList from '@components/goodsList'
@@ -8,6 +8,10 @@ import API from '@api/api'
 import './index.less'
 
 export default class Index extends Component {
+
+  config = {
+    navigationBarTitleText: '美食家'
+  }
 
   constructor(props) {
     super(props)
@@ -21,18 +25,10 @@ export default class Index extends Component {
     }
   }
 
-  componentWillMount () { }
-
   componentDidMount () {
     this.getRotation()
     this.getMenuList()
   }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
 
   onChange (value) {
     this.setState({
@@ -42,13 +38,13 @@ export default class Index extends Component {
 
   async getRotation() {
     let result = await API.getRotationList('/weixin/goods/rotationList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
-    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ list: result.data })
   }
 
   async getMenuList() {
     let result = await API.getMenuList('/weixin/menu/menuList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
-    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     const new_List = result.data.map(item => ({ title: item.menuName, id: item.id }))
     this.setState({ menuList: new_List, tabId: new_List[0].id }, () => {
       this.getGoodsList(this.state.tabId)
@@ -58,17 +54,12 @@ export default class Index extends Component {
   async getGoodsList(id) {
     if(!id) return
     let result = await API.getGoodsList(`/weixin/goods/goodslist?menu_id=${id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
-    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ goodsList: result.data })
   }
 
-  config = {
-    navigationBarTitleText: '美食家'
-  }
   handleClick (value) {
-    this.setState({
-      tabCurrent: value
-    })
+    this.setState({ tabCurrent: value })
     this.getGoodsList(this.state.menuList[value].id)
   }
   toSearch = () => {
@@ -76,18 +67,20 @@ export default class Index extends Component {
       url: '/pages/index/search'
     })
   }
-  async swiperCallBack (item) {
+  swiperCallBack = async (item) => {
     if(item.status === '1') {
-      const result = await API.getCartList(`/weixin/cart/deleteGoods/${item.id}?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
-      if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+      const result = await API.getDelCartl(`/weixin/cart/deleteGoods?goodsId=${item.id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
+      if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
       this.getRotation()
-      return <AtToast isOpened text='删除成功'></AtToast>
-      
+      return Taro.atMessage({ 'message': '加入购物车', 'type': 'success' })
     }else {
-      const result = await API.getAddCartl(`/weixin/cart/add?goodsId=${item.id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
-      if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+      const result = await API.getAddCartl(`/weixin/cart/add`, {
+        goodsId: item.id,
+        openid: 'o6_bmjrPTIm6_2sgVt7hMZOPfL2M'
+      })
+      if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
       this.getRotation()
-      return <AtToast isOpened text='成功加入购物车'></AtToast>
+      return Taro.atMessage({ 'message': '成功加入购物车', 'type': 'success' })
     }
   }
 
@@ -95,6 +88,7 @@ export default class Index extends Component {
     const { list, tabCurrent, menuList, goodsList } = this.state
     return (
       <View className='index-wrap'>
+        <AtMessage />
         <AtSearchBar
           value={this.state.value}
           onFocus={this.toSearch}
