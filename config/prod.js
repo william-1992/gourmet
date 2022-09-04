@@ -1,6 +1,6 @@
 /* eslint-disable import/no-commonjs*/
 const _ = require("lodash");
-const envs = require("./env");
+const envs = require("./env-prod");
 
 const stringifyEnvs = {};
 _.forEach(envs, (v, k) => {
