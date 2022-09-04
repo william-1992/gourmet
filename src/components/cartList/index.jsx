@@ -25,7 +25,8 @@ export default class CartList extends Component {
   filterMenu(id) {
     const { menuList } = this.props;
     const rows = menuList.filter(item => item.id == id)
-    return rows[0].menuName || ''
+    console.error('rows', rows)
+    return rows[0] ? rows[0].menuName : ''
   }
 
   handleRadio = (row) => {

@@ -41,7 +41,11 @@ const config = {
       ]
     ]
   },
-  plugins: ["@tarojs/plugin-less", "@tarojs/plugin-sass"],
+  plugins: [
+    "@tarojs/plugin-less",
+    "@tarojs/plugin-sass",
+    "@tarojs/plugin-uglify"
+  ],
   defineConstants: {},
   mini: {
     postcss: {
@@ -83,6 +87,24 @@ const config = {
         }
       }
     }
+    // webpackChain(chain, webpack) {
+    //   chain.merge({
+    //     module: {
+    //       rule: {
+    //         myloader: {
+    //           test: /\.js$/,
+    //           use: [
+    //             {
+    //               loader: "babel-loader",
+    //               options: {}
+    //             }
+    //           ]
+    //         }
+    //       }
+    //     }
+    //   });
+    // },
+    // publicPath: process.env.NODE_ENV === "development" ? "/" : "./"
   }
 };
 

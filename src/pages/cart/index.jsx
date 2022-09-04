@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Radio, Image } from '@tarojs/components'
-import { AtIcon, AtTag, AtButton, AtToast } from 'taro-ui'
+import { AtIcon, AtTag, AtButton, AtToast, AtMessage } from 'taro-ui'
 import API from '@api/api'
 import qs from "qs";
 import CartList from '@components/cartList'

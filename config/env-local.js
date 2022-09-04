@@ -1,7 +1,7 @@
 // http://xh5qwn.natappfree.cc/weixin/goods/rotationList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M
 module.exports = {
   BUILD_ENV: "DEV",
-  API_HOSTNAME: "http://8733mt.natappfree.cc",
+  API_HOSTNAME: "http://106.12.166.122",
   OPEN_ID: "o6_bmjrPTIm6_2sgVt7hMZOPfL2M", // 仅开用
 
   /// --- 4个地址 ----

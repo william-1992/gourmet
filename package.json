@@ -48,12 +48,16 @@
     "nervjs": "^1.5.5",
     "qs": "^6.11.0",
     "regenerator-runtime": "0.11.1",
-    "taro-ui": "^2.3.4"
+    "taro-ui": "^2.3.4",
+    "vconsole": "^3.14.6"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.18.10",
     "@tarojs/mini-runner": "2.2.18",
     "@tarojs/plugin-less": "^2.2.10",
     "@tarojs/plugin-sass": "^2.2.10",
+    "@tarojs/plugin-terser": "^2.2.10",
+    "@tarojs/plugin-uglify": "^2.2.10",
     "@tarojs/webpack-runner": "2.2.18",
     "@types/react": "^16.4.6",
     "@types/webpack-env": "^1.13.6",
