@@ -1,7 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Image, Radio } from '@tarojs/components'
-import { AtIcon, AtTag, AtToast, AtMessage } from 'taro-ui'
-import cartlist from '@assets/images/cartlist.png'
+import { AtIcon, AtTag, AtMessage } from 'taro-ui'
 import API from '@api/api'
 import './index.less'
 
@@ -25,7 +24,6 @@ export default class CartList extends Component {
   filterMenu(id) {
     const { menuList } = this.props;
     const rows = menuList.filter(item => item.id == id)
-    console.error('rows', rows)
     return rows[0] ? rows[0].menuName : ''
   }
 
