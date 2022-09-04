@@ -19,17 +19,9 @@ export default class Order extends Component {
     }
   }
 
-  componentWillMount () { }
-
   componentDidMount () {
     this.getOrderList()
   }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
 
   config = {
     navigationBarTitleText: '订单'

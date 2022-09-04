@@ -14,8 +14,6 @@ export default class Detailed extends Component {
       menuList: []
     }
   }
-  // $instance = getCurrentInstance()
-  componentWillMount () { }
 
   componentDidMount () {
     this.getMenuList()
@@ -27,12 +25,6 @@ export default class Detailed extends Component {
     // console.error('router', Taro.getCurrentInstance().router.params)
     // console.error('prevProps', prevProps, this.props)
   }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
 
   config = {
     navigationBarTitleText: '明细'

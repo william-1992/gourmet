@@ -13,16 +13,6 @@ export default class User extends Component {
     }
   }
 
-  componentWillMount () { }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
   config = {
     navigationBarTitleText: '我的'
   }

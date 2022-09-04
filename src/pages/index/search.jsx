@@ -32,16 +32,6 @@ export default class Index extends Component {
     }
   }
 
-  componentWillMount () { }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
   onChange (value) {
     this.setState({
       value
