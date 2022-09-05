@@ -5,7 +5,6 @@ import API from '@api/api'
 import qs from "qs";
 import CartList from '@components/cartList'
 import './index.less'
-import { async } from 'regenerator-runtime'
 
 export default class Cart extends Component {
 
@@ -15,22 +14,13 @@ export default class Cart extends Component {
       menuList: [],
       list: [],
       allChecked: false,
-      isPlace: false
     }
   }
-
-  componentWillMount () { }
 
   componentDidMount () {
     this.getMenuList()
     this.getCartList()
   }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
 
   config = {
     navigationBarTitleText: '购物车'
@@ -69,7 +59,7 @@ export default class Cart extends Component {
 
   filterListChecked() {
     const {list} = this.state
-    const allChecked = list.some(item => item.checked === true)
+    const allChecked = list.every(item => item.checked === true)
     this.setState({ allChecked })
   }
 
@@ -86,17 +76,14 @@ export default class Cart extends Component {
       goodsIds: ids,
       openid: 'o6_bmjrPTIm6_2sgVt7hMZOPfL2M'
     })
-    // const result = await API.createCart(`/weixin/order/creatOrder?${qs.stringify({
-    //   ids,
-    //   openid: 'o6_bmjrPTIm6_2sgVt7hMZOPfL2M'
-    // })}`)
     if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
     this.getCartList()
     return Taro.atMessage({ 'message': '下单成功', 'type': 'success' })
   }
 
   render () {
-    const { allChecked, isPlace, list, menuList } = this.state;
+    const { allChecked, list, menuList } = this.state;
+    const isPlace = list.some(item => item.checked === true)
     return (
       <View className='cart-wrap'>
         <AtMessage />

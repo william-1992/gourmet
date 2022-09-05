@@ -16,7 +16,6 @@ export default class CartList extends Component {
   }
 
   componentDidMount() {
-    console.error('process', process.env)
   }
 
   componentDidUpdate() {}

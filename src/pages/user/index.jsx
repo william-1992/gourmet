@@ -46,7 +46,7 @@ export default class User extends Component {
         </View>
         <View className='user-foot'>
           {/* <a href="tel:12345678902">联系客服</a> */}
-          <Text>技术支持：河北点闪科机有限公司</Text>
+          <Text>技术支持：河北点闪科技有限公司</Text>
         </View>
       </View>
     )
