@@ -69,9 +69,13 @@ const config = {
     }
   },
   h5: {
-    publicPath: "/",
+    publicPath: "./",
     staticDirectory: "static",
     esnextModules: ["taro-ui"],
+    router: {
+      mode: "browser",
+      basename: "/gourmet"
+    },
     postcss: {
       autoprefixer: {
         enable: true,

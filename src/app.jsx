@@ -8,9 +8,6 @@ import VConsole from 'vconsole';
 // or init with options
 const vConsole = new VConsole({ theme: 'dark' });
 
-// call `console` methods as usual
-console.log('Hello world');
-
 // remove it when you finish debugging
 vConsole.destroy();
 
@@ -32,14 +29,8 @@ if (window &&window.location.pathname && window.location.pathname !== '/') {
 class App extends Component {
 
   componentDidMount () {
-    this.init()
+    // this.init()
   }
-
-  componentDidShow () {}
-
-  componentDidHide () {}
-
-  componentDidCatchError () {}
 
   init() {
     // 利用正则表达式
