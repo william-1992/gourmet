@@ -69,11 +69,11 @@ const config = {
     }
   },
   h5: {
-    publicPath: "./",
+    // publicPath: "./",
     staticDirectory: "static",
     esnextModules: ["taro-ui"],
     router: {
-      mode: "browser",
+      mode: "hash",
       basename: "/gourmet"
     },
     postcss: {
@@ -90,7 +90,7 @@ const config = {
           generateScopedName: "[name]__[local]___[hash:base64:5]"
         }
       }
-    }
+    },
     // webpackChain(chain, webpack) {
     //   chain.merge({
     //     module: {
@@ -108,7 +108,7 @@ const config = {
     //     }
     //   });
     // },
-    // publicPath: process.env.NODE_ENV === "development" ? "/" : "./"
+    publicPath: process.env.NODE_ENV === "development" ? "/" : "./"
   }
 };
 

@@ -12,7 +12,7 @@ export default class GoodsList extends Component {
     this.state = {}
   }
   render() {
-    const { data, onChange } = this.props
+    const { data = [], onChange } = this.props
     const API_HOSTNAME = process.env.API_HOSTNAME;
     return (    
       <View className='cart-list'>

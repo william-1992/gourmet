@@ -17,6 +17,11 @@ export default class User extends Component {
     navigationBarTitleText: '我的'
   }
 
+  componentDidMount() {
+    // weixin/user/userInfo?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M
+    // get
+  }
+
   toEdit = () => {
     Taro.navigateTo({
       url: '/pages/user/edit'

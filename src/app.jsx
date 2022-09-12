@@ -6,10 +6,16 @@ import VConsole from 'vconsole';
 
 // const vConsole = new VConsole();
 // or init with options
-const vConsole = new VConsole({ theme: 'dark' });
+// const vConsole = new VConsole({ theme: 'dark' });
 
 // remove it when you finish debugging
-vConsole.destroy();
+// vConsole.destroy();
+
+let vConsole;
+if(process.env.NODE_ENV === 'development') {
+  vConsole = new VConsole({ theme: 'dark' });
+  vConsole.destroy();
+}
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -18,13 +24,13 @@ vConsole.destroy();
 // }
 
 // history 路由强制到 hash
-if (window &&window.location.pathname && window.location.pathname !== '/') {
-  const redirectPathhref = window.location.href
-    .replace(window.location.origin, '')
-    .replace(/#.*$/, '')
-  window.IN_HIS_ROUTER_JUMPING = true
-  window.location.replace('/#'+redirectPathhref)
-}
+// if (window &&window.location.pathname && window.location.pathname !== '/') {
+//   const redirectPathhref = window.location.href
+//     .replace(window.location.origin, '')
+//     .replace(/#.*$/, '')
+//   window.IN_HIS_ROUTER_JUMPING = true
+//   window.location.replace('/#'+redirectPathhref)
+// }
 
 class App extends Component {
 

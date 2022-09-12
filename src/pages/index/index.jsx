@@ -72,7 +72,7 @@ export default class Index extends Component {
       const result = await API.getDelCartl(`/weixin/cart/deleteGoods?goodsId=${item.id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
       if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
       this.getRotation()
-      return Taro.atMessage({ 'message': '加入购物车', 'type': 'success' })
+      return Taro.atMessage({ 'message': '取消该订单', 'type': 'success' })
     }else {
       const result = await API.getAddCartl(`/weixin/cart/add`, {
         goodsId: item.id,

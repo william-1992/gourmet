@@ -1,8 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image, Button, Picker } from '@tarojs/components'
 import avatar from '@assets/images/avatar.png'
-import { AtForm, AtInput, AtButton, AtIcon } from 'taro-ui'
+import { AtForm, AtInput, AtButton, AtIcon, AtMessage } from 'taro-ui'
 import { areas } from './area';
+import API from '@api/api'
 import './index.less'
 
 export default class User extends Component {
@@ -39,8 +40,15 @@ export default class User extends Component {
       value
     })
   }
-  onSubmit (event) {
-    console.log(this.state.value, event)
+  onSubmit = async (event) => {
+    const { label, name, phone, address, regionCode } = this.state
+    const result = await API.updateUser('/weixin/user/update', { label, name, phone, address, regionCode })
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+    return Taro.atMessage({ 'message': '保存成功', 'type': 'success' })
+  }
+  // input触发
+  onInputChange (label, val) {
+    this.setState({ [label]: val })
   }
 
   getRegion = () => {
@@ -75,12 +83,13 @@ export default class User extends Component {
     const addresArr = [provinces, citys, counts]
     return (
       <View className='user-wrap user-edit-wrap'>
+        <AtMessage />
         <View className='user-top'>
           <Image src={avatar}></Image>
           {/* <Text>美食家店家<Image src={edit}></Image></Text> */}
         </View>
         <AtForm
-          onSubmit={this.onSubmit.bind(this)}
+          onSubmit={this.onSubmit}
         >
           <View className='user-form'>
             <AtInput 
@@ -89,6 +98,7 @@ export default class User extends Component {
               type='text' 
               placeholder='请填写' 
               value={this.state.label} 
+              onChange={this.onInputChange.bind(this, 'label')}
             />
             <AtInput 
               name='name' 
@@ -96,6 +106,7 @@ export default class User extends Component {
               type='text' 
               placeholder='请填写' 
               value={this.state.name} 
+              onChange={this.onInputChange.bind(this, 'name')}
             />
             <AtInput 
               name='phone' 
@@ -103,6 +114,7 @@ export default class User extends Component {
               type='text' 
               placeholder='请填写' 
               value={this.state.phone} 
+              onChange={this.onInputChange.bind(this, 'phone')}
             />
             <Picker 
               mode='multiSelector' 
@@ -127,6 +139,7 @@ export default class User extends Component {
               type='text' 
               placeholder='小区楼栋名称' 
               value={this.state.address} 
+              onChange={this.onInputChange.bind(this, 'address')}
             />
           </View>
           <AtButton type='primary' formType='submit'>保存</AtButton>

@@ -13,7 +13,7 @@ export default  class IndexSwipper extends PureComponent {
     return (
       <Swiper
         current={0}
-        className='test-h'
+        className='swipper-wrap'
         displayMultipleItems={1.3}
       >
         {list.length>0 && list.map(item => (

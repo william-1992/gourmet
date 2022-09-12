@@ -111,6 +111,16 @@ class API extends Server {
       throw err;
     }
   }
+
+  // 用户更新接口
+  async updateUser(url, params = {}) {
+    try {
+      let result = await this.axios("post", `${API_HOSTNAME}${url}`, params);
+      if (result) return result;
+    } catch (error) {
+      throw err;
+    }
+  }
 }
 
 export default new API();
