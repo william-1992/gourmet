@@ -1,7 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import { AtSearchBar, AtTabBar, AtList, AtListItem, AtMessage, AtToast } from 'taro-ui'
-import bannerImg from '@assets/images/banner.png'
 import IndexSwipper from '@components/swipper'
 import GoodsList from '@components/goodsList'
 import API from '@api/api'

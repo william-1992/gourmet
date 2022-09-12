@@ -5,11 +5,19 @@ import { Swiper, SwiperItem } from '@tarojs/components'
 import cartDefault from '@assets/images/shopcart.png'
 import cartChecked from '@assets/images/shopcart_ligh.png'
 
+const API_HOSTNAME = process.env.API_HOSTNAME;
+
 export default  class IndexSwipper extends PureComponent {
 
+  openPreview = (item) => {
+    Taro.previewImage({
+      current: `${API_HOSTNAME}${item.goodsImg}`, // 当前显示图片的http链接
+      urls: [`${API_HOSTNAME}${item.goodsImg}`], // 需要预览的图片http链接列表
+    })
+  }
+  
   render () {
     const { list, onChange } = this.props
-    const API_HOSTNAME = process.env.API_HOSTNAME;
     return (
       <Swiper
         current={0}
@@ -23,6 +31,7 @@ export default  class IndexSwipper extends PureComponent {
                 <Image
                   className='item-img-banner'
                   src={`${API_HOSTNAME}${item.goodsImg}`}
+                  onClick={this.openPreview.bind(this, item)}
                 />
                 { item.status === '0' ? (
                   <Image onClick={() => onChange(item)} className='item-img-cart' src={cartDefault} />

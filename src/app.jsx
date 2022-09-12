@@ -3,6 +3,7 @@ import Index from './pages/index'
 import 'taro-ui/dist/style/index.scss'
 import header from '@api/header';
 import VConsole from 'vconsole';
+import './app.less'
 
 // const vConsole = new VConsole();
 // or init with options

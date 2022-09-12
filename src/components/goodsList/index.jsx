@@ -5,15 +5,24 @@ import cartDefault from '@assets/images/banner-cart.png'
 import cartChecked from '@assets/images/banner-cart-checked.png'
 import './index.less'
 
+const API_HOSTNAME = process.env.API_HOSTNAME;
+
 export default class GoodsList extends Component {
 
   constructor(props) {
     super(props)
     this.state = {}
   }
+
+  openPreview = (item) => {
+    Taro.previewImage({
+      current: `${API_HOSTNAME}${item.goodsImg}`, // 当前显示图片的http链接
+      urls: [`${API_HOSTNAME}${item.goodsImg}`], // 需要预览的图片http链接列表
+    })
+  }
+  
   render() {
     const { data = [], onChange } = this.props
-    const API_HOSTNAME = process.env.API_HOSTNAME;
     return (    
       <View className='cart-list'>
         {data.length>0 && data.map(item => (
@@ -22,6 +31,7 @@ export default class GoodsList extends Component {
               <Image
                 className='item-img'
                 src={`${API_HOSTNAME}${item.goodsImg}`}
+                onClick={this.openPreview.bind(this, item)}
               />
               <View className='cart-list-item-title'>
                 <View className='cart-list-item-title-h'>{item.goodsName}</View>

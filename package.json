@@ -47,6 +47,7 @@
     "nerv-devtools": "^1.5.5",
     "nervjs": "^1.5.5",
     "qs": "^6.11.0",
+    "react-photo-view": "^1.2.2",
     "regenerator-runtime": "0.11.1",
     "taro-ui": "^2.3.4",
     "vconsole": "^3.14.6"
@@ -59,7 +60,7 @@
     "@tarojs/plugin-terser": "^2.2.10",
     "@tarojs/plugin-uglify": "^2.2.10",
     "@tarojs/webpack-runner": "2.2.18",
-    "@types/react": "^16.4.6",
+    "@types/react": "^16.6.0",
     "@types/webpack-env": "^1.13.6",
     "babel-eslint": "^8.2.3",
     "babel-plugin-transform-class-properties": "^6.24.1",

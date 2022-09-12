@@ -1866,7 +1866,16 @@
   resolved "https://r.cnpmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
-"@types/react@^16.4.6", "@types/react@^16.7.3":
+"@types/react@^16.6.0":
+  version "16.14.31"
+  resolved "https://r.cnpmjs.org/@types/react/-/react-16.14.31.tgz#03757719ac16b460ab9124f718fdd079f6578fe8"
+  integrity sha512-CD3LuBW4xIeGy6BxuNZdXBOsuP00OHFuNOq/4e2xKDq6z02XvdH9wIkuPNmz7BRQpo5ncy1zT9fz4tTDqXbjzQ==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^16.7.3":
   version "16.14.30"
   resolved "https://r.cnpmjs.org/@types/react/-/react-16.14.30.tgz#a1d83f73f4326798d65fe6b58cb4caeacee47623"
   integrity sha512-tG+xGtDDSuIl1l63mN0LnaROAc99knkYyN4YTheE80iPzYvSy0U8LVie+OBZkrgjVrpkQV6bMCkSphPBnVNk6g==
@@ -9681,6 +9690,11 @@ react-native-unimodules@^0.5.3:
     unimodules-permissions-interface "~3.0.0"
     unimodules-sensors-interface "~3.0.0"
     unimodules-task-manager-interface "~3.0.0"
+
+react-photo-view@^1.2.2:
+  version "1.2.2"
+  resolved "https://r.cnpmjs.org/react-photo-view/-/react-photo-view-1.2.2.tgz#deaed9af83ec5ccc1f240c58a62bffeb0a6c0187"
+  integrity sha512-/xsOiDuiR23hKxpmF73EDKPvsBvcWogolXvnBhMZV4CUhd9tnXF91amjKnuQe9BmLaR9CbNxXDOI9SNKeXT5ew==
 
 react-proxy@^1.1.7:
   version "1.1.8"
