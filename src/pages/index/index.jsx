@@ -19,7 +19,10 @@ export default class Index extends Component {
       tabId: null,
       value: '',
       list: [],
-      menuList: [],
+      menuList: [{
+        title: '全部',
+        id: ''
+      }],
       goodsList: []
     }
   }
@@ -45,13 +48,13 @@ export default class Index extends Component {
     let result = await API.getMenuList('/weixin/menu/menuList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     const new_List = result.data.map(item => ({ title: item.menuName, id: item.id }))
-    this.setState({ menuList: new_List, tabId: new_List[0].id }, () => {
-      this.getGoodsList(this.state.tabId)
+    this.setState({ menuList: [ ...this.state.menuList, ...new_List], tabId: new_List[0].id }, () => {
+      this.getGoodsList('')
     })
   }
 
   async getGoodsList(id) {
-    if(!id) return
+    // if(!id) return
     let result = await API.getGoodsList(`/weixin/goods/goodslist?menu_id=${id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ goodsList: result.data })

@@ -31,7 +31,7 @@ export default class CartList extends Component {
   }
 
   delCart = async (item) => {
-    let result = await API.getCartList(`/weixin/cart/deleteGoods/${item.id}?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
+    let result = await API.getCartList(`/weixin/cart/deleteGoods?goodsId=${item.id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.props.callBack('del')
     return Taro.atMessage({ 'message': '删除成功', 'type': 'success' })
@@ -46,7 +46,7 @@ export default class CartList extends Component {
         {list.length>0 && list.map(item => (
           <View className='list-item'>
             <View className='list-item-top'>
-              <Text className='list-item-top-data'>添加日期：<Text>{item.createTime}</Text></Text>
+              <Text className='list-item-top-data'>添加日期：<Text>{item.createDate}</Text></Text>
               {type!=='detailed' && <AtIcon value='trash' size='18' color='rgba(112, 112, 112, 1)' onClick={this.delCart.bind(this,item)}></AtIcon>}
             </View>
             <View className='list-item-content'>

@@ -1,3 +1,30 @@
 .taro-tabbar__tabbar-bottom {
   z-index: 10;
 }
+.at-tab-bar {
+  align-items: center;
+  &::after {
+    display: none;
+  }
+  .at-tab-bar__item--active {
+    .at-tab-bar__title {
+      position: relative;
+      overflow: inherit;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      // justify-content: center;
+      font-size: 34px;
+      &::after {
+        position: absolute;
+        content: '';
+        display: inline-block;
+        width: 38px;
+        height: 8px;
+        background-color: #FEC748;
+        border-radius: 5px;
+        bottom: -12px;
+      }
+    }
+  }
+}

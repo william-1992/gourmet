@@ -14,8 +14,8 @@ export default class User extends Component {
       provinces: [], 
       citys: [],
       counts: [],
-      label: '',
-      name: '',
+      shopsName: '',
+      userName: '',
       phone: '',
       region: '',
       regionName: '',
@@ -93,20 +93,20 @@ export default class User extends Component {
         >
           <View className='user-form'>
             <AtInput 
-              name='label' 
+              name='shopsName' 
               title='商铺名称' 
               type='text' 
               placeholder='请填写' 
-              value={this.state.label} 
-              onChange={this.onInputChange.bind(this, 'label')}
+              value={this.state.shopsName} 
+              onChange={this.onInputChange.bind(this, 'shopsName')}
             />
             <AtInput 
-              name='name' 
+              name='userName' 
               title='收货姓名' 
               type='text' 
               placeholder='请填写' 
-              value={this.state.name} 
-              onChange={this.onInputChange.bind(this, 'name')}
+              value={this.state.userName} 
+              onChange={this.onInputChange.bind(this, 'userName')}
             />
             <AtInput 
               name='phone' 

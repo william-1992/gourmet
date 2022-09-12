@@ -3,6 +3,7 @@ import { View, Text, Image } from '@tarojs/components'
 import avatar from '@assets/images/avatar.png'
 import edit from '@assets/images/icon_edit.png'
 import { AtList, AtListItem } from 'taro-ui'
+import API from '@api/api'
 import './index.less'
 
 export default class User extends Component {
@@ -10,6 +11,7 @@ export default class User extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      userInfo: {}
     }
   }
 
@@ -18,8 +20,15 @@ export default class User extends Component {
   }
 
   componentDidMount() {
+    this.getUserInfo()
     // weixin/user/userInfo?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M
     // get
+  }
+
+  getUserInfo = async () => {
+    const result = await API.getUserInfo('/weixin/user/userInfo?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M')
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+    this.setState({ userInfo: result.data })
   }
 
   toEdit = () => {
@@ -33,17 +42,19 @@ export default class User extends Component {
   }
 
   render () {
+    const { userInfo } = this.state;
+    const API_HOSTNAME = process.env.API_HOSTNAME;
     return (
       <View className='user-wrap'>
         <View className='user-content'>
           <View className='user-top'>
-            <Image src={avatar}></Image>
-            <Text>美食家店家<Image onClick={this.toEdit} src={edit}></Image></Text>
+            <Image src={ userInfo.img ? `${API_HOSTNAME}${userInfo.img}` : avatar}></Image>
+            <Text>{userInfo.shopsName}<Image onClick={this.toEdit} src={edit}></Image></Text>
           </View>
           <AtList>
-            <AtListItem title='收货姓名' extraText='老马' />
-            <AtListItem title='收货电话' extraText='美食家' />
-            <AtListItem title='收货地址' extraText='13012341234' />
+            <AtListItem title='收货姓名' extraText={ userInfo.userName } />
+            <AtListItem title='收货电话' extraText={ userInfo.phone } />
+            <AtListItem title='收货地址' extraText={ userInfo.address } />
           </AtList>
           <AtList className='user-help'>
             <AtListItem title='客服与帮助' arrow='right' onClick={this.callPhone} />

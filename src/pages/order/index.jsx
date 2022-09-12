@@ -40,7 +40,8 @@ export default class Order extends Component {
   }
 
   orderCancel = async (item) => {
-    const result = await API.getOrderCancel(`weixin/order/cancelOrders/${item.id}?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M `)
+    console.error('item', item)
+    const result = await API.getOrderCancel(`/weixin/order/cancelOrders/${item.orderNo}?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.getOrderList()
     return Taro.atMessage({ 'message': '已取消该订单', 'type': 'success' })
@@ -67,7 +68,7 @@ export default class Order extends Component {
               { item.orderStatus === 2 ? (
                 <AtButton><Image className='item-img' src={cancel2} />已取消</AtButton>
               ) : item.orderStatus === 1 ? (
-                <AtButton onClick={this.orderCancel.bind(this, item)} className='red'><Image className='item-img' src={orders} />已接单</AtButton>
+                <AtButton className='red'><Image className='item-img' src={orders} />已接单</AtButton>
               ) : (
                 <AtButton onClick={this.orderCancel.bind(this, item)}><Image className='item-img' src={cancel} />取消</AtButton>
               )}

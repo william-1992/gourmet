@@ -74,7 +74,7 @@ export default class Cart extends Component {
     const ids = list.map(item => item.checked && item.id)
     const result = await API.createCart(`/weixin/order/creatOrder`, {
       goodsIds: ids,
-      openid: 'o6_bmjrPTIm6_2sgVt7hMZOPfL2M'
+      openid: process.env.OPEN_ID
     })
     if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
     this.getCartList()
@@ -84,6 +84,7 @@ export default class Cart extends Component {
   render () {
     const { allChecked, list, menuList } = this.state;
     const isPlace = list.some(item => item.checked === true)
+    const checkList = list.filter(item => item.checked)
     return (
       <View className='cart-wrap'>
         <AtMessage />
@@ -95,13 +96,17 @@ export default class Cart extends Component {
             checked={allChecked} 
             onChange={this.radioChange}
           >全选</Radio>
-          <AtButton 
-            disabled={ (isPlace || allChecked) ? false : true } 
-            size='small' 
-            type='primary' 
-            circle
-            onClick={this.placeOrder.bind(this)}
-          >下单</AtButton>
+          <View className='cart-footer-right'>
+            <Text>共计商品<Text className='red'>{checkList.length || 0}</Text>件</Text>
+            <AtButton 
+              disabled={ (isPlace || allChecked) ? false : true } 
+              size='small' 
+              type='primary' 
+              circle
+              onClick={this.placeOrder.bind(this)}
+            >下单</AtButton>
+          </View>
+          
         </View>
       </View>
     )

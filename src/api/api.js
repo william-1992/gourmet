@@ -112,6 +112,16 @@ class API extends Server {
     }
   }
 
+  // 获取用户信息
+  async getUserInfo(url, params = {}) {
+    try {
+      let result = await this.axios("get", `${API_HOSTNAME}${url}`, params);
+      if (result) return result;
+    } catch (error) {
+      throw err;
+    }
+  }
+
   // 用户更新接口
   async updateUser(url, params = {}) {
     try {
