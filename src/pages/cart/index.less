@@ -19,18 +19,26 @@
         font-size: 28px;
         color: #1D1C1A;
         .red {
+          margin: 0 4px;
           color: red;
         }
       }
     }
     .weui-cells_checkbox {
       font-size: 28px;
+      .weui-icon-checked {
+        &::before {
+          color: #FEC748;
+        }
+      }
     }
     .at-button {
       width: 144px;
       height: 69px;
       position: absolute;
       right: 31px;
+      border-color: #FEC748;
+      background-color: #FEC748;
     }
   }
 
