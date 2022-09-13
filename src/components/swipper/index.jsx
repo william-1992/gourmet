@@ -23,6 +23,7 @@ export default  class IndexSwipper extends PureComponent {
         current={0}
         className='swipper-wrap'
         displayMultipleItems={1.3}
+        circular
       >
         {list.length>0 && list.map(item => (
           <SwiperItem key={item.id}>

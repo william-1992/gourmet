@@ -44,6 +44,7 @@ export default class User extends Component {
     const { label, name, phone, address, regionCode } = this.state
     const result = await API.updateUser('/weixin/user/update', { label, name, phone, address, regionCode })
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+    Taro.navigateTo({ url: '/pages/user/index' })
     return Taro.atMessage({ 'message': '保存成功', 'type': 'success' })
   }
   // input触发

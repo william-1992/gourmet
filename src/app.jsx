@@ -3,6 +3,7 @@ import Index from './pages/index'
 import 'taro-ui/dist/style/index.scss'
 import header from '@api/header';
 import VConsole from 'vconsole';
+import API from '@api/api'
 import './app.less'
 
 // const vConsole = new VConsole();
@@ -36,27 +37,26 @@ if(process.env.NODE_ENV === 'development') {
 class App extends Component {
 
   componentDidMount () {
-    // this.init()
+    this.init()
   }
 
-  init() {
+  async init() {
     // 利用正则表达式
-
     let url =  window.location.search
-
-
     var params = this.queryURLParams(url)
     // openid: "121548a8a8a8a8"
-
     //如果为空则需要web认证
     if(!params){
-        axios({
-            method: 'get',//提交方法
-            url: '/weixin/oauth/config',//提交地址
-            params: {}
-        }).then((res) => {
-            document.location.href = res.data.data
-        })
+      const result = await API.getOpenId('/weixin/oauth/config')
+      if(result.data.data) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+      document.location.href = res.data.data
+      // axios({
+      //       method: 'get',//提交方法
+      //       url: '/weixin/oauth/config',//提交地址
+      //       params: {}
+      //   }).then((res) => {
+      //       document.location.href = res.data.data
+      //   })
     }
     //以下为伪代码：
     var openid = params.openid;
@@ -81,9 +81,11 @@ class App extends Component {
 
     return parames;
 
-}
+  }
 
   config = {
+    enablePullDownRefresh: true,
+    disableSwipeBack: false,
     pages: [
       'pages/index/index',
       'pages/index/search',

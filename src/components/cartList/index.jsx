@@ -4,6 +4,8 @@ import { AtIcon, AtTag, AtMessage } from 'taro-ui'
 import API from '@api/api'
 import './index.less'
 
+const API_HOSTNAME = process.env.API_HOSTNAME;
+
 export default class CartList extends Component {
 
   constructor(props) {
@@ -37,6 +39,13 @@ export default class CartList extends Component {
     return Taro.atMessage({ 'message': '删除成功', 'type': 'success' })
   }
 
+  openPreview = (item) => {
+    Taro.previewImage({
+      current: `${API_HOSTNAME}${item.goodsImg}`, // 当前显示图片的http链接
+      urls: [`${API_HOSTNAME}${item.goodsImg}`], // 需要预览的图片http链接列表
+    })
+  }
+
   render() {
     const { type, list } = this.props
     const API_HOSTNAME = process.env.API_HOSTNAME;
@@ -51,7 +60,7 @@ export default class CartList extends Component {
             </View>
             <View className='list-item-content'>
               {type!=='detailed' && <Radio value='选中' checked={item.checked} onChange={this.handleRadio.bind(this, item)}></Radio> } 
-              <Image className='item-img' src={`${API_HOSTNAME}${item.goodsImg}`} />
+              <Image onClick={this.openPreview.bind(this, item)} className='item-img' src={`${API_HOSTNAME}${item.goodsImg}`} />
               <View className='list-item-content-text'>
                 <View className='list-item-content-text-title'>
                   <View className='title-h'>{item.goodsName}</View>

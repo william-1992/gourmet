@@ -1,10 +1,19 @@
 import Server from "./server";
-import qs from "qs";
 let API_HOSTNAME = process.env.API_HOSTNAME;
 class API extends Server {
   constructor() {
     super();
     this.axios = this.axios.bind(this);
+  }
+
+  // 获取openid
+  async getOpenId(url, params = {}) {
+    try {
+      let result = await this.axios("get", `${API_HOSTNAME}${url}`, params);
+      if (result) return result;
+    } catch (err) {
+      throw err;
+    }
   }
 
   // 首页banner - 首页
