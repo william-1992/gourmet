@@ -10,6 +10,7 @@ export default class Detailed extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      detailId: '',
       list: [],
       menuList: []
     }
@@ -36,20 +37,20 @@ export default class Detailed extends Component {
     this.setState({ menuList: result.data })
   }
 
-  getOrderDetail = async (id) => {
-    const result = await API.getOrderDetail(`/weixin/order/orderGoodsInfo`, { id })
+  getOrderDetail = async (orderNo) => {
+    const result = await API.getOrderDetail(`/weixin/order/orderGoodsInfo`, { orderNo })
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
-    this.setState({ list: result.data })
+    this.setState({ list: result.data, detailId: orderNo })
   }
 
   render () {
-    const { list = [], menuList = [] } = this.state
+    const { list = [], menuList = [], detailId } = this.state
     return (
       <View className='detailed-wrap'>
         <AtMessage />
         <View className='noticebar'>
-          <View>订单明细/订单编号<Text>34528907520</Text></View>
-          <View>共计<Text className='red'>304</Text>商品</View>
+          <View>订单明细/订单编号<Text>{ detailId }</Text></View>
+          <View>共计<Text className='red'>{ list.length }</Text>商品</View>
         </View>
         <CartList list={list} menuList={menuList} type='detailed' />
       </View>
