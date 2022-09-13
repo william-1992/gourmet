@@ -29,6 +29,7 @@ export default class User extends Component {
   }
 
   componentDidMount () {
+    // this.getUserInfo()
     const provinces = areas[0] && areas.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
     const citys = areas[0].children[0] && areas[0].children.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
     const counts = areas[0].children[0].children[0] && areas[0].children[0].children.map(({ areaLvl, label, parentId, value }) => ({ areaLvl, label, parentId, value }))
@@ -40,9 +41,20 @@ export default class User extends Component {
       value
     })
   }
+  getUserInfo = async () => {
+    const result = await API.getUserInfo('/weixin/user/userInfo')
+    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+    const { data } = result
+    this.setState({ ...this.state, ...data, regionCode: [data.provNo, data.cityNo, data.countyNo] }, () => {
+      // const provinces = areas[0] && areas.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
+      // const citys = areas[0].children[0] && areas[0].children.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
+      // const counts = areas[0].children[0].children[0] && areas[0].children[0].children.map(({ areaLvl, label, parentId, value }) => ({ areaLvl, label, parentId, value }))
+      // this.setState({ provinces, citys, counts })
+    })
+  }
   onSubmit = async (event) => {
-    const { label, name, phone, address, regionCode } = this.state
-    const result = await API.updateUser('/weixin/user/update', { label, name, phone, address, regionCode })
+    const { shopsName, userName, phone, address, regionCode } = this.state
+    const result = await API.updateUser('/weixin/user/update', { shopsName, userName, phone, address, regionCode })
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     Taro.navigateTo({ url: '/pages/user/index' })
     return Taro.atMessage({ 'message': '保存成功', 'type': 'success' })

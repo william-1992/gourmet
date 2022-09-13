@@ -27,13 +27,13 @@ export default class Cart extends Component {
   }
 
   async getMenuList() {
-    let result = await API.getMenuList('/weixin/menu/menuList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
+    let result = await API.getMenuList('/weixin/menu/menuList')
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ menuList: result.data })
   }
 
   async getCartList() {
-    let result = await API.getCartList('/weixin/goods/queryCartGoodsInfo?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
+    let result = await API.getCartList('/weixin/goods/queryCartGoodsInfo')
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     const new_list = result.data.map(item => ({ ...item, checked: false }))
     this.setState({ list: new_list })
@@ -71,10 +71,12 @@ export default class Cart extends Component {
 
   placeOrder = async () => {
     const { list } = this.state
-    const ids = list.map(item => item.checked && item.id)
+    const goodsIds = []
+    list.forEach(item => {
+      if(item.checked) goodsIds.push(item.id) 
+    })
     const result = await API.createCart(`/weixin/order/creatOrder`, {
-      goodsIds: ids,
-      openid: process.env.OPEN_ID
+      goodsIds,
     })
     if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
     this.getCartList()

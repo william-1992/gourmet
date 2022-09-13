@@ -31,13 +31,13 @@ export default class Detailed extends Component {
   }
 
   async getMenuList() {
-    let result = await API.getMenuList('/weixin/menu/menuList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
+    let result = await API.getMenuList('/weixin/menu/menuList')
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ menuList: result.data })
   }
 
   getOrderDetail = async (id) => {
-    const result = await API.getOrderDetail(`/weixin/order/orderGoodsInfo?id=${id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
+    const result = await API.getOrderDetail(`/weixin/order/orderGoodsInfo`, { id })
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ list: result.data })
   }

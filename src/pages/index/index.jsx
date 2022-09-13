@@ -39,13 +39,13 @@ export default class Index extends Component {
   }
 
   async getRotation() {
-    let result = await API.getRotationList('/weixin/goods/rotationList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
+    let result = await API.getRotationList('/weixin/goods/rotationList')
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ list: result.data })
   }
 
   async getMenuList() {
-    let result = await API.getMenuList('/weixin/menu/menuList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
+    let result = await API.getMenuList('/weixin/menu/menuList')
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     const new_List = result.data.map(item => ({ title: item.menuName, id: item.id }))
     this.setState({ menuList: [ ...this.state.menuList, ...new_List], tabId: new_List[0].id }, () => {
@@ -55,7 +55,7 @@ export default class Index extends Component {
 
   async getGoodsList(id) {
     // if(!id) return
-    let result = await API.getGoodsList(`/weixin/goods/goodslist?menu_id=${id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
+    let result = await API.getGoodsList(`/weixin/goods/goodslist`, { menu_id: id })
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ goodsList: result.data })
   }
@@ -71,14 +71,13 @@ export default class Index extends Component {
   }
   swiperCallBack = async (item) => {
     if(item.status === '1') {
-      const result = await API.getDelCartl(`/weixin/cart/deleteGoods?goodsId=${item.id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
+      const result = await API.getDelCartl(`/weixin/cart/deleteGoods`, { goodsId: item.id })
       if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
       this.getRotation()
       return Taro.atMessage({ 'message': '取消该订单', 'type': 'success' })
     }else {
       const result = await API.getAddCartl(`/weixin/cart/add`, {
         goodsId: item.id,
-        openid: 'o6_bmjrPTIm6_2sgVt7hMZOPfL2M'
       })
       if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
       this.getRotation()

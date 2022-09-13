@@ -33,7 +33,7 @@ export default class CartList extends Component {
   }
 
   delCart = async (item) => {
-    let result = await API.getCartList(`/weixin/cart/deleteGoods?goodsId=${item.id}&openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
+    let result = await API.getDelCartl(`/weixin/cart/deleteGoods`, { goodsId: item.id })
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.props.callBack('del')
     return Taro.atMessage({ 'message': '删除成功', 'type': 'success' })

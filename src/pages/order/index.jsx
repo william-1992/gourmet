@@ -28,7 +28,7 @@ export default class Order extends Component {
   }
 
   getOrderList = async () => {
-    const result = await API.getOrderList('/weixin/order/orderList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M')
+    const result = await API.getOrderList('/weixin/order/orderList')
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ orderList: result.data })
   }
@@ -41,7 +41,7 @@ export default class Order extends Component {
 
   orderCancel = async (item) => {
     console.error('item', item)
-    const result = await API.getOrderCancel(`/weixin/order/cancelOrders/${item.orderNo}?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M`)
+    const result = await API.getOrderCancel(`/weixin/order/cancelOrders/${item.orderNo}`)
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.getOrderList()
     return Taro.atMessage({ 'message': '已取消该订单', 'type': 'success' })

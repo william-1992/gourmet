@@ -63,6 +63,10 @@ class App extends Component {
     header.set({
       'openid': openid,
     });
+    Taro.setStorage({
+      key: "openId",
+      data: openid
+    })
     //所有ajxa请求都要有 加上参数 openid;  无论是新增  删除  更新 get post
   }
 

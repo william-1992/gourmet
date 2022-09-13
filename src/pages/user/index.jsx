@@ -26,7 +26,7 @@ export default class User extends Component {
   }
 
   getUserInfo = async () => {
-    const result = await API.getUserInfo('/weixin/user/userInfo?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M')
+    const result = await API.getUserInfo('/weixin/user/userInfo')
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ userInfo: result.data })
   }
