@@ -48,14 +48,14 @@ export default class Index extends Component {
     let result = await API.getMenuList('/weixin/menu/menuList')
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     const new_List = result.data.map(item => ({ title: item.menuName, id: item.id }))
-    this.setState({ menuList: [ ...this.state.menuList, ...new_List], tabId: new_List[0].id }, () => {
+    this.setState({ menuList: [ ...this.state.menuList, ...new_List], tabId: '' }, () => {
       this.getGoodsList('')
     })
   }
 
   async getGoodsList(id) {
     // if(!id) return
-    let result = await API.getGoodsList(`/weixin/goods/goodslist`, { menu_id: id })
+    let result = await API.getGoodsList(`/weixin/goods/goodslist`, { menuId: id })
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
     this.setState({ goodsList: result.data })
   }
