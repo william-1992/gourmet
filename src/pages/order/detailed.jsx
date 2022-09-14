@@ -33,13 +33,13 @@ export default class Detailed extends Component {
 
   async getMenuList() {
     let result = await API.getMenuList('/weixin/menu/menuList')
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     this.setState({ menuList: result.data })
   }
 
   getOrderDetail = async (orderNo) => {
     const result = await API.getOrderDetail(`/weixin/order/orderGoodsInfo`, { orderNo })
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     this.setState({ list: result.data, detailId: orderNo })
   }
 

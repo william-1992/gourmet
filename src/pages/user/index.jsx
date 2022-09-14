@@ -27,7 +27,7 @@ export default class User extends Component {
 
   getUserInfo = async () => {
     const result = await API.getUserInfo('/weixin/user/userInfo')
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     this.setState({ userInfo: result.data })
   }
 

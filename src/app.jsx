@@ -48,7 +48,7 @@ class App extends Component {
     //如果为空则需要web认证
     if(!params){
       const result = await API.getOpenId('/weixin/oauth/config')
-      if(result.data.data) return Taro.showToast({ title: result.msg, duration: 2000 })
+      if(result.data.data) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 })
       document.location.href = res.data.data
       // axios({
       //       method: 'get',//提交方法

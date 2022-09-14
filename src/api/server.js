@@ -7,7 +7,7 @@ const { REACT_APP_LOCAL, REACT_APP_API_HOSTNAME } = process.env;
 
 const taostErrDebounce = debounce(
   msg => {
-    Taro.showToast({ title: msg, duration: 2000 });
+    Taro.showToast({ title: msg, icon: "none", duration: 2000 });
   },
   600,
   { leading: true, trailing: false }

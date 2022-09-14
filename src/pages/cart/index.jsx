@@ -27,13 +27,13 @@ export default class Cart extends Component {
 
   async getMenuList() {
     let result = await API.getMenuList('/weixin/menu/menuList')
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     this.setState({ menuList: result.data })
   }
 
   async getCartList() {
     let result = await API.getCartList('/weixin/goods/queryCartGoodsInfo')
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     const new_list = result.data.map(item => ({ ...item, checked: false }))
     this.setState({ list: new_list })
   }
@@ -77,7 +77,7 @@ export default class Cart extends Component {
     const result = await API.createCart(`/weixin/order/creatOrder`, {
       goodsIds,
     })
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     this.getCartList()
     return Taro.showToast({ title: '下单成功', duration: 2000 });
   }

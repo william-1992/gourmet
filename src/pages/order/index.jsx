@@ -29,7 +29,7 @@ export default class Order extends Component {
 
   getOrderList = async () => {
     const result = await API.getOrderList('/weixin/order/orderList')
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     this.setState({ orderList: result.data })
   }
 
@@ -42,7 +42,7 @@ export default class Order extends Component {
   orderCancel = async (item) => {
     console.error('item', item)
     const result = await API.getOrderCancel(`/weixin/order/cancelOrders/${item.orderNo}`)
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     this.getOrderList()
     return Taro.showToast({ title: '已取消该订单', duration: 2000 });
   }

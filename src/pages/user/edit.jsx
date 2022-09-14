@@ -53,7 +53,7 @@ export default class User extends Component {
   }
   getUserInfo = async () => {
     const result = await API.getUserInfo('/weixin/user/userInfo')
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     const { data } = result
     this.setState({ ...this.state, ...data, regionCode: [data.provNo, data.cityNo, data.countyNo] }, () => {
       // const provinces = areas[0] && areas.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
@@ -65,7 +65,7 @@ export default class User extends Component {
   onSubmit = async (event) => {
     const { shopsName, userName, phone, address, regionCode } = this.state
     const result = await API.updateUser('/weixin/user/update', { shopsName, userName, phone, address, regionCode })
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     Taro.navigateTo({ url: '/pages/user/index' })
     return Taro.showToast({ title: '保存成功', duration: 2000 });
   }
