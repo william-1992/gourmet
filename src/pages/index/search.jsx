@@ -39,13 +39,13 @@ export default class Index extends Component {
       goodsName: value,
       menuId: this.state.tabId,
     })
-    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
     this.setState({ goodsList: result.data, searchValue: value })
   }
 
   async getMenuList() {
     let result = await API.getMenuList('/weixin/menu/menuList?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M ')
-    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
     const new_List = result.data.map(item => ({ title: item.menuName, id: item.id }))
     this.setState({ menuList: [ ...this.state.menuList, ...new_List], tabId: '' }, () => {
       this.getGoodsList('')
@@ -58,7 +58,7 @@ export default class Index extends Component {
       goodsName: this.state.searchValue,
       menuId: id,
     })
-    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
     this.setState({ goodsList: result.data })
   }
 
@@ -72,16 +72,16 @@ export default class Index extends Component {
       const result = await API.getDelCartl(`/weixin/cart/deleteGoods`, {
         goodsId: item.id,
       })
-      if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+      if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
       this.getRotation()
-      return Taro.atMessage({ 'message': '取消该订单', 'type': 'success' })
+      return Taro.showToast({ title: '取消该订单', duration: 2000 });
     }else {
       const result = await API.getAddCartl(`/weixin/cart/add`, {
         goodsId: item.id,
       })
-      if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+      if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
       this.getRotation()
-      return Taro.atMessage({ 'message': '成功加入购物车', 'type': 'success' })
+      return Taro.showToast({ title: '成功加入购物车', duration: 2000 });
     }
   }
 

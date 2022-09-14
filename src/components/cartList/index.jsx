@@ -34,9 +34,9 @@ export default class CartList extends Component {
 
   delCart = async (item) => {
     let result = await API.getDelCartl(`/weixin/cart/deleteGoods`, { goodsId: item.id })
-    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
     this.props.callBack('del')
-    return Taro.atMessage({ 'message': '删除成功', 'type': 'success' })
+    return Taro.showToast({ title: '删除成功', duration: 2000 });
   }
 
   openPreview = (item) => {
@@ -51,7 +51,6 @@ export default class CartList extends Component {
     const API_HOSTNAME = process.env.API_HOSTNAME;
     return (    
       <View className='order-list'>
-        <AtMessage />
         {list.length>0 && list.map(item => (
           <View className='list-item'>
             <View className='list-item-top'>

@@ -2,16 +2,12 @@ import axios from "axios";
 import { debounce, isNil, includes } from "lodash";
 import qs from "qs";
 import header from "./header";
-import { AtMessage } from "taro-ui";
 
 const { REACT_APP_LOCAL, REACT_APP_API_HOSTNAME } = process.env;
 
 const taostErrDebounce = debounce(
   msg => {
-    Taro.atMessage({
-      message: msg,
-      type: "error"
-    });
+    Taro.showToast({ title: msg, duration: 2000 });
   },
   600,
   { leading: true, trailing: false }

@@ -1,8 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text, Radio, Image } from '@tarojs/components'
-import { AtIcon, AtTag, AtButton, AtToast, AtMessage } from 'taro-ui'
+import { AtIcon, AtTag, AtButton, AtToast } from 'taro-ui'
 import API from '@api/api'
-import qs from "qs";
 import CartList from '@components/cartList'
 import './index.less'
 
@@ -28,13 +27,13 @@ export default class Cart extends Component {
 
   async getMenuList() {
     let result = await API.getMenuList('/weixin/menu/menuList')
-    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
     this.setState({ menuList: result.data })
   }
 
   async getCartList() {
     let result = await API.getCartList('/weixin/goods/queryCartGoodsInfo')
-    if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
     const new_list = result.data.map(item => ({ ...item, checked: false }))
     this.setState({ list: new_list })
   }
@@ -78,9 +77,9 @@ export default class Cart extends Component {
     const result = await API.createCart(`/weixin/order/creatOrder`, {
       goodsIds,
     })
-    if(result.code !== 200) return <AtToast isOpened text={result.msg}></AtToast>
+    if(result.code !== 200) return Taro.showToast({ title: result.msg, duration: 2000 });
     this.getCartList()
-    return Taro.atMessage({ 'message': '下单成功', 'type': 'success' })
+    return Taro.showToast({ title: '下单成功', duration: 2000 });
   }
 
   render () {
@@ -89,7 +88,6 @@ export default class Cart extends Component {
     const checkList = list.filter(item => item.checked)
     return (
       <View className='cart-wrap'>
-        <AtMessage />
         <CartList list={list} menuList={menuList} isAll={allChecked} callBack={this.radioHandle} />
         <View className='cart-footer'>
           <Radio 
