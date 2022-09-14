@@ -16,7 +16,7 @@ export default class Index extends Component {
     super(props)
     this.state = {
       tabCurrent: 0,
-      tabId: null,
+      tabId: '',
       value: '',
       list: [],
       menuList: [{
@@ -53,7 +53,7 @@ export default class Index extends Component {
     })
   }
 
-  async getGoodsList(id) {
+  async getGoodsList(id = '') {
     // if(!id) return
     let result = await API.getGoodsList(`/weixin/goods/goodslist`, { menuId: id })
     if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
@@ -61,7 +61,7 @@ export default class Index extends Component {
   }
 
   handleClick (value) {
-    this.setState({ tabCurrent: value })
+    this.setState({ tabCurrent: value, tabId: this.state.menuList[value].id })
     this.getGoodsList(this.state.menuList[value].id)
   }
   toSearch = () => {
@@ -74,6 +74,7 @@ export default class Index extends Component {
       const result = await API.getDelCartl(`/weixin/cart/deleteGoods`, { goodsId: item.id })
       if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
       this.getRotation()
+      this.getGoodsList(this.state.tabId)
       return Taro.atMessage({ 'message': '取消该订单', 'type': 'success' })
     }else {
       const result = await API.getAddCartl(`/weixin/cart/add`, {
@@ -81,6 +82,7 @@ export default class Index extends Component {
       })
       if(result.code !== 200) return Taro.atMessage({ 'message': result.msg, 'type': 'error' })
       this.getRotation()
+      this.getGoodsList(this.state.tabId)
       return Taro.atMessage({ 'message': '成功加入购物车', 'type': 'success' })
     }
   }

@@ -34,7 +34,17 @@ export default class User extends Component {
     const citys = areas[0].children[0] && areas[0].children.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
     const counts = areas[0].children[0].children[0] && areas[0].children[0].children.map(({ areaLvl, label, parentId, value }) => ({ areaLvl, label, parentId, value }))
     this.setState({ provinces, citys, counts })
+
+
+    // window.addEventListener('popstate', function() {
+    //   this.alert('back')
+    // })
+
   }
+
+  // componentDidHide() {
+  //   alert('back111')
+  // }
 
   handleChange (value) {
     this.setState({

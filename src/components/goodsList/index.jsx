@@ -38,11 +38,11 @@ export default class GoodsList extends Component {
                 <View className='cart-list-item-title-price'><Text className='unit'>¥</Text>{item.goodsPrice}</View>
               </View>
             </View>
-            <View className='cart-list-item-right'>
-              {item.status === '0' ? (
-                <Image onClick={() => onChange(item)} className='item-cart' src={cartDefault}/>
-              ) : (
+            <View className={`cart-list-item-right ${item.status === '1' ? '' : 'nocheck'}`}>
+              {item.status === '1' ? (
                 <Image onClick={() => onChange(item)} className='item-cart' src={cartChecked}/>
+              ) : (
+                <Image onClick={() => onChange(item)} className='item-cart' src={cartDefault}/>
               )}
             </View>
           </View>

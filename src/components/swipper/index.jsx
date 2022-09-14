@@ -34,10 +34,10 @@ export default  class IndexSwipper extends PureComponent {
                   src={`${API_HOSTNAME}${item.goodsImg}`}
                   onClick={this.openPreview.bind(this, item)}
                 />
-                { item.status === '0' ? (
-                  <Image onClick={() => onChange(item)} className='item-img-cart' src={cartDefault} />
-                ) : (
+                { item.status === '1' ? (
                   <Image onClick={() => onChange(item)} className='item-img-cart item-img-cart-ligh' src={cartChecked} />
+                ) : (
+                  <Image onClick={() => onChange(item)} className='item-img-cart' src={cartDefault} />
                 )}
               </View>
               <View className='item-text'>
