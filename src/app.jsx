@@ -44,12 +44,13 @@ class App extends Component {
     // 利用正则表达式
     let url =  window.location.search
     var params = this.queryURLParams(url)
+    console.error('url', url, params)
     // openid: "121548a8a8a8a8"
     //如果为空则需要web认证
-    if(!params){
+    if(!params.openid){
       const result = await API.getOpenId('/weixin/oauth/config')
-      if(result.data.data) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 })
-      document.location.href = res.data.data
+      if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 })
+      document.location.href = result.data
       // axios({
       //       method: 'get',//提交方法
       //       url: '/weixin/oauth/config',//提交地址
