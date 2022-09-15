@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Text, Image, Radio } from '@tarojs/components'
-import { AtIcon, AtTag, AtMessage } from 'taro-ui'
+import { AtIcon, AtTag, AtModal } from 'taro-ui'
 import API from '@api/api'
 import './index.less'
 
@@ -11,6 +11,8 @@ export default class CartList extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      delItem: {},
+      visible: false,
       list: [],
       menuList: [],
       isAllChecked: false
@@ -32,10 +34,15 @@ export default class CartList extends Component {
     this.props.callBack('checked', row)
   }
 
-  delCart = async (item) => {
-    let result = await API.getDelCartl(`/weixin/cart/deleteGoods`, { goodsId: item.id })
+  delCart = (item) => {
+    this.setState({ visible: true, delItem: item })
+  }
+
+  confrim = async () => {
+    let result = await API.getDelCartl(`/weixin/cart/deleteGoods`, { goodsId: this.state.delItem.id })
     if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     this.props.callBack('del')
+    this.setState({ visible: false })
     return Taro.showToast({ title: '删除成功', duration: 2000 });
   }
 
@@ -47,10 +54,11 @@ export default class CartList extends Component {
   }
 
   render() {
+    const { visible } = this.state;
     const { type, list } = this.props
     const API_HOSTNAME = process.env.API_HOSTNAME;
     return (    
-      <View className='order-list'>
+      <View className='order-list cart-list'>
         {list.length>0 && list.map(item => (
           <View className='list-item'>
             <View className='list-item-top'>
@@ -70,6 +78,15 @@ export default class CartList extends Component {
             </View>
           </View>
         ))}
+        <AtModal
+          isOpened={visible}
+          title='提示'
+          cancelText='取消'
+          confirmText='删除'
+          onCancel={ () => { this.setState({ visible: false }) } }
+          onConfirm={ this.confrim.bind(this) }
+          content='确认删除？'
+        />
       </View>
     )
   }
