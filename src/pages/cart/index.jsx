@@ -1,10 +1,11 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Radio, Image } from '@tarojs/components'
-import { AtIcon, AtTag, AtButton, AtToast } from 'taro-ui'
+import { View, Text, Radio } from '@tarojs/components'
+import { AtButton } from 'taro-ui'
 import API from '@api/api'
 import CartList from '@components/cartList'
 import './index.less'
 
+Taro.startPullDownRefresh()
 export default class Cart extends Component {
 
   constructor(props) {
@@ -17,7 +18,11 @@ export default class Cart extends Component {
   }
 
   componentDidMount () {
+    Taro.startPullDownRefresh()
     this.getMenuList()
+  }
+
+  componentDidShow() {
     this.getCartList()
   }
 

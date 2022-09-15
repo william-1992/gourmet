@@ -20,6 +20,10 @@ export default class Order extends Component {
   }
 
   componentDidMount () {
+    
+  }
+
+  componentDidShow() {
     this.getOrderList()
   }
 

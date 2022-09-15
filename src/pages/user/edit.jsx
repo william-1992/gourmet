@@ -29,17 +29,11 @@ export default class User extends Component {
   }
 
   componentDidMount () {
-    // this.getUserInfo()
+    this.getUserInfo()
     const provinces = areas[0] && areas.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
     const citys = areas[0].children[0] && areas[0].children.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
     const counts = areas[0].children[0].children[0] && areas[0].children[0].children.map(({ areaLvl, label, parentId, value }) => ({ areaLvl, label, parentId, value }))
     this.setState({ provinces, citys, counts })
-
-
-    // window.addEventListener('popstate', function() {
-    //   this.alert('back')
-    // })
-
   }
 
   // componentDidHide() {
@@ -56,18 +50,33 @@ export default class User extends Component {
     if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     const { data } = result
     this.setState({ ...this.state, ...data, regionCode: [data.provNo, data.cityNo, data.countyNo] }, () => {
-      // const provinces = areas[0] && areas.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
-      // const citys = areas[0].children[0] && areas[0].children.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
-      // const counts = areas[0].children[0].children[0] && areas[0].children[0].children.map(({ areaLvl, label, parentId, value }) => ({ areaLvl, label, parentId, value }))
-      // this.setState({ provinces, citys, counts })
+      const provinces = areas[0] && areas.map(({ areaLvl, label, parentId, value, children }) => ({ areaLvl, label, parentId, value, children }))
+      const provIndex = provinces.findIndex(item => item.value === data.provNo)
+      const citys = provinces[provIndex].children ? provinces[provIndex].children : []
+      const cityIndex = citys.findIndex(item => item.value === data.cityNo)
+      const counts = citys[cityIndex].children ? citys[cityIndex].children : []
+      const countIndex = counts.findIndex(item => item.value === data.countyNo)
+      this.setState({ 
+        provinces, 
+        citys, 
+        counts, 
+        region: [provIndex, cityIndex, countIndex],
+        regionName: `${provinces[provIndex].label} ${citys[cityIndex]?citys[cityIndex].label:''} ${counts[countIndex]?counts[countIndex].label:''}`,
+      })
     })
   }
   onSubmit = async (event) => {
     const { shopsName, userName, phone, address, regionCode } = this.state
-    const result = await API.updateUser('/weixin/user/update', { shopsName, userName, phone, address, regionCode })
+    const result = await API.updateUser('/weixin/user/update', { shopsName, userName, phone, address, provNo: regionCode[0], cityNo: regionCode[1], countyNo: regionCode[2] })
     if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
-    Taro.navigateTo({ url: '/pages/user/index' })
-    return Taro.showToast({ title: '保存成功', duration: 2000 });
+    // Taro.navigateTo({ url: '/pages/user/index' })
+    
+    Taro.showToast({ title: '保存成功', duration: 2000, success: (res) => {
+      setTimeout(() => {
+        Taro.navigateBack({ delta: 1 })
+      }, 2000)
+    } });
+    
   }
   // input触发
   onInputChange (label, val) {

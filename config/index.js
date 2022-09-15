@@ -1,6 +1,8 @@
 const path = require("path");
 
 const config = {
+  enablePullDownRefresh: true, //使能微信小程序的下拉刷新
+  backgroundTextStyle: "dark", //顶部显示颜色为深色的三个点
   projectName: "gourmet",
   date: "2022-8-15",
   designWidth: 750,
