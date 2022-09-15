@@ -2,7 +2,7 @@ import Taro, { Component } from "@tarojs/taro";
 import Server from "./server";
 import qs from "qs";
 const API_HOSTNAME = process.env.API_HOSTNAME;
-const open_id = Taro.getStorageSync("openId") || "o6_bmjrPTIm6_2sgVt7hMZOPfL2M";
+const open_id = Taro.getStorageSync("openId"); // || "o6_bmjrPTIm6_2sgVt7hMZOPfL2M";
 class API extends Server {
   constructor() {
     super();

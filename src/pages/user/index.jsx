@@ -48,7 +48,7 @@ export default class User extends Component {
       <View className='user-wrap'>
         <View className='user-content'>
           <View className='user-top'>
-            <Image src={ userInfo.img ? `${API_HOSTNAME}${userInfo.img}` : avatar}></Image>
+            <Image src={ userInfo.img ? userInfo.img : avatar}></Image>
             <Text>{userInfo.shopsName}<Image onClick={this.toEdit} src={edit}></Image></Text>
           </View>
           <AtList>
