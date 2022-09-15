@@ -27,7 +27,7 @@ export default class Index extends Component {
     }
   }
 
-  componentDidMount () {
+  componentDidShow() {
     this.getRotation()
     this.getMenuList()
   }
