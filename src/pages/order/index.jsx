@@ -6,6 +6,7 @@ import cancel from '@assets/images/cancel.png'
 import cancel2 from '@assets/images/cancel2.png'
 import orders from '@assets/images/orders.png'
 import pricel from '@assets/images/pricel.png'
+import empty from '@assets/images/empty.png'
 
 import './index.less'
 import { async } from 'regenerator-runtime'
@@ -57,7 +58,7 @@ export default class Order extends Component {
     return (
       <View className='order-wrap'>
         <View className='order-wrap-header'>共计<Text>{orderList.length || 0}</Text>订单</View>
-        { orderList.length>0 && orderList.map(item => (
+        { orderList.length > 0 ? (orderList.map(item => (
           <AtList className={`${ item.orderStatus === 2 ? 'cancel-item' : item.orderStatus === 1 ? 'down-item' : '' }`}>
             <AtListItem title='商品' extraText={`${item.orderNum}个`} />
             <AtListItem title='收货人' extraText={item.userName} />
@@ -81,35 +82,11 @@ export default class Order extends Component {
               </AtButton>
             </View>
           </AtList>
-        )) }
-        {/* <AtList className='cancel-item'>
-          <AtListItem title='商品' extraText='1个' />
-          <AtListItem title='收货人' extraText='美食家' />
-          <AtListItem title='电话' extraText='13012341234' />
-          <AtListItem title='地址' extraText='成都市青羊区时代印象' />
-          <AtDivider />
-          <AtListItem title='下单日期' extraText='2020/08/04 15:22' />
-          <AtListItem title='订单编号' extraText='34528907520' />
-          <AtDivider className='foot-divider' />
-          <View className='item-foot'>
-            <AtButton><Image className='item-img' src={cancel2} />已取消</AtButton>
-            <AtButton className='yellow'><Image className='item-img' src={pricel} />明细</AtButton>
+        ))) : (
+          <View className='empty-wrap'>
+            <Image src={empty} />
           </View>
-        </AtList>
-        <AtList className='down-item'>
-          <AtListItem title='商品' extraText='1个' />
-          <AtListItem title='收货人' extraText='美食家' />
-          <AtListItem title='电话' extraText='13012341234' />
-          <AtListItem title='地址' extraText='成都市青羊区时代印象' />
-          <AtDivider />
-          <AtListItem title='下单日期' extraText='2020/08/04 15:22' />
-          <AtListItem title='订单编号' extraText='34528907520' />
-          <AtDivider className='foot-divider' />
-          <View className='item-foot'>
-            <AtButton className='red'><Image className='item-img' src={cancel} />已接单</AtButton>
-            <AtButton className='yellow'><Image className='item-img' src={pricel} />明细</AtButton>
-          </View>
-        </AtList> */}
+        ) }
       </View>
     )
   }

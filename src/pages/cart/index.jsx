@@ -1,8 +1,9 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View, Text, Radio } from '@tarojs/components'
+import { View, Text, Radio, Image } from '@tarojs/components'
 import { AtButton } from 'taro-ui'
 import API from '@api/api'
 import CartList from '@components/cartList'
+import empty from '@assets/images/empty.png'
 import './index.less'
 
 Taro.startPullDownRefresh()
@@ -93,7 +94,14 @@ export default class Cart extends Component {
     const checkList = list.filter(item => item.checked)
     return (
       <View className='cart-wrap'>
-        <CartList list={list} menuList={menuList} isAll={allChecked} callBack={this.radioHandle} />
+        { list.length > 0 ? (
+          <CartList list={list} menuList={menuList} isAll={allChecked} callBack={this.radioHandle} />
+        ) : (
+          <View className='empty-wrap'>
+            <Image src={empty} />
+          </View>
+        ) }
+        
         <View className='cart-footer'>
           <Radio 
             color='#FEC748' 

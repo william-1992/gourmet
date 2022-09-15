@@ -52,9 +52,9 @@ export default class User extends Component {
             <Text>{userInfo.shopsName}<Image onClick={this.toEdit} src={edit}></Image></Text>
           </View>
           <AtList>
-            <AtListItem title='收货姓名' extraText={ userInfo.userName } />
-            <AtListItem title='收货电话' extraText={ userInfo.phone } />
-            <AtListItem title='收货地址' extraText={ userInfo.address } />
+            <AtListItem title='收货姓名' extraText={ userInfo.userName || '' } />
+            <AtListItem title='收货电话' extraText={ userInfo.phone || '' } />
+            <AtListItem title='收货地址' extraText={ userInfo.address || '' } />
           </AtList>
           <AtList className='user-help'>
             <AtListItem title='客服与帮助' arrow='right' onClick={this.callPhone} />
