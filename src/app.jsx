@@ -5,6 +5,7 @@ import header from '@api/header';
 import VConsole from 'vconsole';
 import API from '@api/api'
 import './app.less'
+import { View } from '@tarojs/components';
 
 // const vConsole = new VConsole();
 // or init with options
@@ -36,6 +37,12 @@ if(process.env.NODE_ENV === 'development') {
 
 class App extends Component {
 
+  constructor(props) {
+    this.state = {
+      openid: ''
+    }
+  }
+
   componentDidMount () {
     this.init()
   }
@@ -44,7 +51,6 @@ class App extends Component {
     // 利用正则表达式
     let url =  window.location.search
     var params = this.queryURLParams(url)
-    console.error('url', url, params)
     // openid: "121548a8a8a8a8"
     //如果为空则需要web认证
     if(!params.openid){
@@ -61,6 +67,8 @@ class App extends Component {
     }
     //以下为伪代码：
     var openid = params.openid;
+    console.error('url', url, params, openid)
+
     header.set({
       'openid': openid,
     });
@@ -138,7 +146,9 @@ class App extends Component {
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   render () {
-    return <Index />
+    return (
+      <View>{this.state.openid && <Index />}</View>
+    )
   }
 }
 

@@ -19,7 +19,7 @@ export default class User extends Component {
     navigationBarTitleText: '我的'
   }
 
-  componentDidMount() {
+  componentDidShow() {
     this.getUserInfo()
     // weixin/user/userInfo?openid=o6_bmjrPTIm6_2sgVt7hMZOPfL2M
     // get
