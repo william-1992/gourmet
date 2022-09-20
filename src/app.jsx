@@ -40,7 +40,7 @@ if(process.env.NODE_ENV === 'development') {
 class App extends Component {
 
   componentDidMount () {
-    // this.init()
+    this.init()
   }
 
   async init() {
