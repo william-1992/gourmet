@@ -1,8 +1,12 @@
 import Taro, { Component } from "@tarojs/taro";
+import header from "@api/header.js";
 import Server from "./server";
 import qs from "qs";
 const API_HOSTNAME = process.env.API_HOSTNAME;
-const open_id = Taro.getStorageSync("openId"); // || "o6_bmjrPTIm6_2sgVt7hMZOPfL2M";
+const open_id = Taro.getStorageSync("openId") || "o6_bmjrPTIm6_2sgVt7hMZOPfL2M";
+
+if (!open_id) window.location.reload();
+
 class API extends Server {
   constructor() {
     super();

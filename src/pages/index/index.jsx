@@ -19,10 +19,7 @@ export default class Index extends Component {
       tabId: '',
       value: '',
       list: [],
-      menuList: [{
-        title: '全部',
-        id: ''
-      }],
+      menuList: [],
       goodsList: []
     }
   }
@@ -40,15 +37,16 @@ export default class Index extends Component {
 
   async getRotation() {
     let result = await API.getRotationList('/weixin/goods/rotationList')
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 })
+    if(result.code !== 200) return // Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 })
     this.setState({ list: result.data })
   }
 
   async getMenuList() {
     let result = await API.getMenuList('/weixin/menu/menuList')
-    if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 })
+    if(result.code !== 200) return // Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 })
     const new_List = result.data.map(item => ({ title: item.menuName, id: item.id }))
-    this.setState({ menuList: [ ...this.state.menuList, ...new_List], tabId: '' }, () => {
+    const filstMenu = [{ title: '全部', id: '' }]
+    this.setState({ menuList: [ ...filstMenu, ...new_List], tabId: '' }, () => {
       this.getGoodsList('')
     })
   }
@@ -74,6 +72,10 @@ export default class Index extends Component {
       const result = await API.getDelCartl(`/weixin/cart/deleteGoods`, { goodsId: item.id })
       if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 })
       this.getRotation()
+      // const { list } = this.state;
+      // const indexs = list.indexOf(ite => ite.id === item.id)
+      // console.error('indexs', indexs)
+
       this.getGoodsList(this.state.tabId)
       return Taro.showToast({ title: '取消加入购物车', duration: 2000 }) 
     }else {
@@ -82,6 +84,10 @@ export default class Index extends Component {
       })
       if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 })
       this.getRotation()
+      // const { list } = this.state;
+      // list.forEach(ite => {
+      //   if(ite.id === item.id) ite.status = '1'
+      // })
       this.getGoodsList(this.state.tabId)
       return Taro.showToast({ title: '成功加入购物车', duration: 2000 })
     }
@@ -89,6 +95,7 @@ export default class Index extends Component {
 
   render () {
     const { list, tabCurrent, menuList, goodsList } = this.state
+    // let now_date = Date().toString()
     return (
       <View className='index-wrap'>
         <AtSearchBar

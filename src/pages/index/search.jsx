@@ -17,10 +17,7 @@ export default class Index extends Component {
       tabCurrent: 0,
       searchValue: '',
       list: [],
-      menuList: [{
-        title: '全部',
-        id: ''
-      }],
+      menuList: [],
       goodsList: []
     }
   }
@@ -47,7 +44,8 @@ export default class Index extends Component {
     let result = await API.getMenuList('/weixin/menu/menuList')
     if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     const new_List = result.data.map(item => ({ title: item.menuName, id: item.id }))
-    this.setState({ menuList: [ ...this.state.menuList, ...new_List], tabId: '' }, () => {
+    const filstMenu = [{ title: '全部', id: '' }]
+    this.setState({ menuList: [ ...filstMenu, ...new_List], tabId: '' }, () => {
       this.getGoodsList('')
     })
   }

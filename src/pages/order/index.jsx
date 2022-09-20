@@ -66,7 +66,7 @@ export default class Order extends Component {
             <AtListItem title='地址' extraText={item.address} />
             <AtDivider />
             <AtListItem title='下单日期' extraText={item.createDate} />
-            <AtListItem title='订单编号' extraText={item.id} />
+            <AtListItem title='订单编号' extraText={item.orderNo} />
             <AtDivider className='foot-divider' />
             <View className='item-foot'>
               { item.orderStatus === 2 ? (

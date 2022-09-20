@@ -1,11 +1,12 @@
 import Taro, { Component } from '@tarojs/taro'
+import { View } from '@tarojs/components';
 import Index from './pages/index'
 import 'taro-ui/dist/style/index.scss'
-import header from '@api/header';
 import VConsole from 'vconsole';
 import API from '@api/api'
+import header from "@api/header.js";
 import './app.less'
-import { View } from '@tarojs/components';
+
 
 // const vConsole = new VConsole();
 // or init with options
@@ -35,48 +36,32 @@ if(process.env.NODE_ENV === 'development') {
 //   window.location.replace('/#'+redirectPathhref)
 // }
 
+
 class App extends Component {
 
-  constructor(props) {
-    this.state = {
-      openid: ''
-    }
-  }
-
   componentDidMount () {
-    this.init()
+    // this.init()
   }
 
   async init() {
     // 利用正则表达式
     let url =  window.location.search
     var params = this.queryURLParams(url)
-    // openid: "121548a8a8a8a8"
     //如果为空则需要web认证
     if(!params.openid){
       const result = await API.getOpenId('/weixin/oauth/config')
       if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 })
       document.location.href = result.data
-      // axios({
-      //       method: 'get',//提交方法
-      //       url: '/weixin/oauth/config',//提交地址
-      //       params: {}
-      //   }).then((res) => {
-      //       document.location.href = res.data.data
-      //   })
     }
     //以下为伪代码：
-    var openid = params.openid;
-    console.error('url', url, params, openid)
-
+    console.error('urls', url, params)
     header.set({
-      'openid': openid,
+      'openid': params.openid,
     });
     Taro.setStorage({
       key: "openId",
-      data: openid
+      data: params.openid
     })
-    //所有ajxa请求都要有 加上参数 openid;  无论是新增  删除  更新 get post
   }
 
   // // 返回参数对象
@@ -146,9 +131,7 @@ class App extends Component {
   // 在 App 类中的 render() 函数没有实际作用
   // 请勿修改此函数
   render () {
-    return (
-      <View>{this.state.openid && <Index />}</View>
-    )
+    return <Index />
   }
 }
 
