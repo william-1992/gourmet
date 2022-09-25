@@ -27,6 +27,7 @@ export default class Index extends Component {
   componentDidShow() {
     this.getRotation()
     this.getMenuList()
+    this.setState({ tabCurrent: 0 })
   }
 
   onChange (value) {

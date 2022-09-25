@@ -96,6 +96,10 @@ export default class Cart extends Component {
     const { allChecked, list, menuList } = this.state;
     const isPlace = list.some(item => item.checked === true)
     const checkList = list.filter(item => item.checked)
+    let allPrice = 0
+    checkList.forEach(item => {
+      allPrice= allPrice + (item.goodsPrice || 0)
+    })
     return (
       <View className='cart-wrap'>
         { list.length > 0 ? (
@@ -114,7 +118,11 @@ export default class Cart extends Component {
             onChange={this.radioChange}
           >全选</Radio>
           <View className='cart-footer-right'>
-            <Text>共计商品<Text className='red'>{checkList.length || 0}</Text>件</Text>
+            <View className='cart-footer-right-text'>
+              <Text>共计商品<Text className='red'>{checkList.length || 0}</Text>件</Text>
+              <Text className='cart-footer-right-price'>¥<Text className='red'>{allPrice}</Text>元</Text>
+            </View>
+            
             <AtButton
               disabled={ checkList.length > 0 ? false : true } 
               // disabled={ (isPlace || allChecked) ? false : true } 

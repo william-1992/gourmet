@@ -42,7 +42,7 @@ export default  class IndexSwipper extends PureComponent {
               </View>
               <View className='item-text'>
                 <Text className='item-text-title'>{ item.goodsName }</Text>
-                <Text className='item-text-price'><Text className='unit'>¥</Text>{ item.goodsPrice }</Text>
+                {item.goodsPrice !== null && <Text className='item-text-price'><Text className='unit'>¥</Text>{ item.goodsPrice }</Text>}
               </View>
             </View>
           </SwiperItem>

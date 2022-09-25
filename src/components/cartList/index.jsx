@@ -73,7 +73,7 @@ export default class CartList extends Component {
                   <View className='title-h'>{item.goodsName}</View>
                   <AtTag size='small'>{ this.filterMenu(item.menuId) }</AtTag>
                 </View>
-                <Text className='price'><Text className='unit'>¥</Text>{item.goodsPrice}</Text>
+                {item.goodsPrice !== null && <Text className='price'><Text className='unit'>¥</Text>{item.goodsPrice}</Text>}
               </View>
             </View>
           </View>

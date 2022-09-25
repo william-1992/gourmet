@@ -35,7 +35,7 @@ export default class GoodsList extends Component {
               />
               <View className='cart-list-item-title'>
                 <View className='cart-list-item-title-h'>{item.goodsName}</View>
-                <View className='cart-list-item-title-price'><Text className='unit'>¥</Text>{item.goodsPrice}</View>
+                {item.goodsPrice !== null && <View className='cart-list-item-title-price'><Text className='unit'>¥</Text>{item.goodsPrice}</View>}
               </View>
             </View>
             <View className={`cart-list-item-right ${item.status === '1' ? '' : 'nocheck'}`}>
