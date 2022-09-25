@@ -65,7 +65,8 @@ class App extends Component {
   }
 
   geturlparam(url) {
-    let p = url.split('?')[1]
+    if(url === '') return {}
+    let p = url.split('?')[1]    
     let keyValue = p.split('&');
     let obj = {};
     for (let i = 0; i < keyValue.length; i++) {
@@ -75,7 +76,7 @@ class App extends Component {
       obj[key] = value;
     }
     return obj
-  },
+  }
 
 
   // // 返回参数对象
