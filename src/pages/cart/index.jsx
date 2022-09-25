@@ -25,6 +25,7 @@ export default class Cart extends Component {
 
   componentDidShow() {
     this.getCartList()
+    this.setState({ allChecked: false })
   }
 
   config = {
@@ -70,6 +71,7 @@ export default class Cart extends Component {
 
   radioChange = (e) => {
     const { allChecked, list } = this.state;
+    if(list.length === 0) return
     const new_data = list.map(item => ({ ...item, checked: !allChecked }))
     this.setState({ allChecked: !allChecked, list: new_data })
   }
@@ -85,7 +87,9 @@ export default class Cart extends Component {
     })
     if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     this.getCartList()
+    this.setState({ allChecked: false })
     return Taro.showToast({ title: '下单成功', duration: 2000 });
+
   }
 
   render () {
@@ -111,8 +115,9 @@ export default class Cart extends Component {
           >全选</Radio>
           <View className='cart-footer-right'>
             <Text>共计商品<Text className='red'>{checkList.length || 0}</Text>件</Text>
-            <AtButton 
-              disabled={ (isPlace || allChecked) ? false : true } 
+            <AtButton
+              disabled={ checkList.length > 0 ? false : true } 
+              // disabled={ (isPlace || allChecked) ? false : true } 
               size='small' 
               type='primary' 
               circle

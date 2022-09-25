@@ -60,13 +60,13 @@ export default class Order extends Component {
         <View className='order-wrap-header'>共计<Text>{orderList.length || 0}</Text>订单</View>
         { orderList.length > 0 ? (orderList.map(item => (
           <AtList className={`${ item.orderStatus === 2 ? 'cancel-item' : item.orderStatus === 1 ? 'down-item' : '' }`}>
-            <AtListItem title='商品' extraText={`${item.orderNum}个`} />
-            <AtListItem title='收货人' extraText={item.userName} />
-            <AtListItem title='电话' extraText={item.phone} />
-            <AtListItem title='地址' extraText={item.address} />
+            <AtListItem title='商品' extraText={`${item.orderNum || 0}个`} />
+            <AtListItem title='收货人' extraText={item.userName || '-'} />
+            <AtListItem title='电话' extraText={item.phone || '-'} />
+            <AtListItem title='地址' extraText={item.address || '-'} />
             <AtDivider />
-            <AtListItem title='下单日期' extraText={item.createDate} />
-            <AtListItem title='订单编号' extraText={item.orderNo} />
+            <AtListItem title='下单日期' extraText={item.createDate || '-'} />
+            <AtListItem title='订单编号' extraText={item.orderNo || '-'} />
             <AtDivider className='foot-divider' />
             <View className='item-foot'>
               { item.orderStatus === 2 ? (

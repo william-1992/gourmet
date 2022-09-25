@@ -51,10 +51,11 @@ export default class Index extends Component {
   }
 
   async getGoodsList(id) {
+
     // if(!id) return
     let result = await API.getGoodsList(`/weixin/goods/goodslist`, {
       goodsName: this.state.searchValue,
-      menuId: id,
+      menuId: id || this.state.tabCurrent,
     })
     if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
     this.setState({ goodsList: result.data })
