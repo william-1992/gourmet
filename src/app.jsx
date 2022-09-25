@@ -10,16 +10,16 @@ import './app.less'
 
 // const vConsole = new VConsole();
 // or init with options
-// const vConsole = new VConsole({ theme: 'dark' });
+const vConsole = new VConsole({ theme: 'dark' });
 
 // remove it when you finish debugging
-// vConsole.destroy();
+vConsole.destroy();
 
-let vConsole;
-if(process.env.NODE_ENV === 'development') {
-  vConsole = new VConsole({ theme: 'dark' });
-  vConsole.destroy();
-}
+// let vConsole;
+// if(process.env.NODE_ENV === 'development') {
+//   vConsole = new VConsole({ theme: 'dark' });
+//   vConsole.destroy();
+// }
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -46,7 +46,7 @@ class App extends Component {
   async init() {
     // 利用正则表达式
     let url =  window.location.search
-    var params = this.queryURLParams(url)
+    var params = this.geturlparam(url) // this.queryURLParams(url)
     //如果为空则需要web认证
     if(!params.openid){
       const result = await API.getOpenId('/weixin/oauth/config')
@@ -60,9 +60,23 @@ class App extends Component {
     });
     Taro.setStorage({
       key: "openId",
-      data: params.openid
+      data: params.openid,
     })
   }
+
+  geturlparam(url) {
+    let p = url.split('?')[1]
+    let keyValue = p.split('&');
+    let obj = {};
+    for (let i = 0; i < keyValue.length; i++) {
+      let item = keyValue[i].split('=');
+      let key = item[0];
+      let value = item[1];
+      obj[key] = value;
+    }
+    return obj
+  },
+
 
   // // 返回参数对象
   queryURLParams(url) {
