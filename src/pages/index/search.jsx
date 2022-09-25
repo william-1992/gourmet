@@ -71,14 +71,14 @@ export default class Index extends Component {
         goodsId: item.id,
       })
       if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
-      this.getRotation()
+      this.getGoodsList()
       return Taro.showToast({ title: '取消加入购物车', duration: 2000 });
     }else {
       const result = await API.getAddCartl(`/weixin/cart/add`, {
         goodsId: item.id,
       })
       if(result.code !== 200) return Taro.showToast({ title: result.msg, icon: 'none', duration: 2000 });
-      this.getRotation()
+      this.getGoodsList()
       return Taro.showToast({ title: '成功加入购物车', duration: 2000 });
     }
   }

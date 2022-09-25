@@ -45,7 +45,7 @@ class App extends Component {
 
   async init() {
     // 利用正则表达式
-    let url =  window.location.search
+    let url = window.location.search; // '?openid=ojdaB6u0zwmbgUK_CIW44P5WI8VI&msg=null' // window.location.search
     var params = this.geturlparam(url) // this.queryURLParams(url)
     //如果为空则需要web认证
     if(!params.openid){
