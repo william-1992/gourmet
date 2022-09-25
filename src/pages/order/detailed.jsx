@@ -45,12 +45,20 @@ export default class Detailed extends Component {
 
   render () {
     const { list = [], menuList = [], detailId } = this.state
+    let allPrice = 0
+    list.forEach(item => {
+      allPrice= allPrice + (item.goodsPrice || 0)
+    })
     return (
       <View className='detailed-wrap'>
         <AtMessage />
         <View className='noticebar'>
           <View>订单明细/订单编号<Text>{ detailId }</Text></View>
-          <View>共计<Text className='red'>{ list.length }</Text>商品</View>
+          {/* <View>共计<Text className='red'>{ list.length }</Text>商品</View> */}
+        </View>
+        <View className='detailed-info'>
+          <Text>共计<Text className='red'>{ list.length }</Text>商品</Text>
+          <Text>¥<Text className='red'>{allPrice}</Text>元</Text>
         </View>
         <CartList list={list} menuList={menuList} type='detailed' />
       </View>
