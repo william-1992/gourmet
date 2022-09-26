@@ -69,7 +69,7 @@ export default class Order extends Component {
             <AtListItem title='订单编号' extraText={item.orderNo || '-'} />
             <AtDivider className='foot-divider' />
             <View className='item-foot'>
-              { item.orderStatus === 2 ? (
+              { (item.orderStatus === 2 || item.orderStatus === 3) ? (
                 <AtButton><Image className='item-img' src={cancel2} />已取消</AtButton>
               ) : item.orderStatus === 1 ? (
                 <AtButton className='red'><Image className='item-img' src={orders} />已接单</AtButton>
