@@ -1,3 +1,4 @@
+import Taro, { Component } from "@tarojs/taro";
 import axios from "axios";
 import { debounce, isNil, includes } from "lodash";
 import qs from "qs";
@@ -97,6 +98,8 @@ export default class Server {
   axios(method, url, params, others = {}, useOrigin = false) {
     return new Promise((resolve, reject) => {
       if (typeof params !== "object" || isNil(params)) params = {};
+      const open_id = Taro.getStorageSync("openId");
+      if (url.indexOf("oauth") < 0 && !open_id) return;
       let _option = params;
       _option = {
         method,
@@ -104,7 +107,9 @@ export default class Server {
         baseURL: REACT_APP_API_HOSTNAME,
         timeout: 6 * 1e3,
         params: null,
-        headers: null,
+        headers: {
+          openid: open_id || "null"
+        },
         // withCredentials: true, //是否携带cookies发起请求
         data: params,
         ...others

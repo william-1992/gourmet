@@ -100,6 +100,7 @@ export default class Cart extends Component {
     checkList.forEach(item => {
       allPrice= allPrice + (item.goodsPrice || 0)
     })
+    let price_toggle = list.every(item => JSON.stringify(item.goodsPrice) === 'null')
     return (
       <View className='cart-wrap'>
         { list.length > 0 ? (
@@ -120,7 +121,7 @@ export default class Cart extends Component {
           <View className='cart-footer-right'>
             <View className='cart-footer-right-text'>
               <Text>共计商品<Text className='red'>{checkList.length || 0}</Text>件</Text>
-              <Text className='cart-footer-right-price'>¥<Text className='red'>{allPrice}</Text>元</Text>
+              {!price_toggle && <Text className='cart-footer-right-price'>¥<Text className='red'>{allPrice}</Text>元</Text>}
             </View>
             
             <AtButton

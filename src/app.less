@@ -28,3 +28,19 @@
     }
   }
 }
+.wx-image-viewer {
+  .viewer-image-container {
+    &::after {
+      content: '';
+      width: 70px;
+      height: 70px;
+      display: block;
+      background-color: #FEC748;
+      position: absolute;
+      right: 20px;
+      top: 40px;
+      background: url('./assets/images/close.png');
+      background-size: cover;
+    }
+  }
+}
