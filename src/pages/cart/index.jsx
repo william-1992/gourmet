@@ -100,7 +100,7 @@ export default class Cart extends Component {
     checkList.forEach(item => {
       allPrice= allPrice + (item.goodsPrice || 0)
     })
-    let price_toggle = list.every(item => JSON.stringify(item.goodsPrice) === 'null')
+    let price_toggle = checkList.every(item => JSON.stringify(item.goodsPrice) === 'null')
     return (
       <View className='cart-wrap'>
         { list.length > 0 ? (
